@@ -8,12 +8,22 @@
 4. Go
 
 1. Кто такие программисты и чем они занимаются (Git + GitHub/Gitlub)
-https://github.com/bogdandrienko
+https://github.com/bogdandrienko/
 https://git-scm.com/
+https://desktop.github.com/
 
-2. Кто даёт задачи программистам? (Jira)
+2. Кто даёт задачи программистам? (Jira / Confluence / Trello)
+Опытный коллега или наставник, менеджер, тимлид, заказчик
+https://www.atlassian.com/ru/software/jira
+
 3. Что такое язык программирование и фреймворк (app.diagrams.net)
-4. Запись транлясляций
+https://app.diagrams.net/
+https://www.simplilearn.com/best-programming-languages-start-learning-today-article
+https://www.python.org/downloads/
+
+4. IDE
+https://code.visualstudio.com/
+https://www.jetbrains.com/pycharm/download/
 
 ДЗ:
 1. Завести гитхаб и первый репозиторий (скинуть мне ссылку)

@@ -1,0 +1,28 @@
+<mxfile host="app.diagrams.net" modified="2023-05-15T16:18:03.407Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36" etag="uMFccB0pWuhlXpXQY7Yj" version="21.2.9" type="device">
+  <diagram name="Page-1" id="71sdnsnHLPL3ABsHhfhK">
+    <mxGraphModel dx="893" dy="497" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="9lBSIZuB2cMHRXXJ0w7r-5" value="инструкции компьютеру" style="shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="1">
+          <mxGeometry x="67" y="268" width="325" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="9lBSIZuB2cMHRXXJ0w7r-6" value="Python / PHP / JavaScript" style="text;html=1;strokeColor=#82b366;fillColor=#d5e8d4;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="30" y="231" width="147" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="9lBSIZuB2cMHRXXJ0w7r-7" value="C++ / Rust / C" style="text;html=1;strokeColor=#b85450;fillColor=#f8cecc;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="295" y="231" width="84" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="9lBSIZuB2cMHRXXJ0w7r-8" value="Компилируемый (binary), &lt;br&gt;&lt;br&gt;со статической типизацией, &lt;br&gt;&lt;br&gt;без сборщика мусора" style="text;html=1;strokeColor=#b85450;fillColor=#f8cecc;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="249.5" y="302.5" width="169" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="9lBSIZuB2cMHRXXJ0w7r-9" value="Интерпретируемые (), &lt;br&gt;&lt;br&gt;со строгой динамической типизацией, &lt;br&gt;&lt;br&gt;со сборщика мусора (GC)" style="text;html=1;strokeColor=#82b366;fillColor=#d5e8d4;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="4" y="303.5" width="232" height="73" as="geometry" />
+        </mxCell>
+        <mxCell id="9lBSIZuB2cMHRXXJ0w7r-11" value="Go / C# / Java" style="text;html=1;strokeColor=#d6b656;fillColor=#fff2cc;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="195" y="231" width="87" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
