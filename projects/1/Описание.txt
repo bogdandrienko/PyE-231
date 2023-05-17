@@ -25,6 +25,8 @@ https://www.python.org/downloads/
 https://code.visualstudio.com/
 https://www.jetbrains.com/pycharm/download/
 
+https://chat.openai.com/
+
 ДЗ:
 1. Завести гитхаб и первый репозиторий (скинуть мне ссылку)
 2. Собрать "выжимку" с 30-70 вакансий, в 1 текстовый файл.
