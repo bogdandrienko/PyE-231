@@ -1,0 +1,43 @@
+<mxfile host="app.diagrams.net" modified="2023-05-22T16:27:53.815Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36" etag="-Xe3YNWIbh1F7NWKGooJ" version="21.3.2" type="device">
+  <diagram name="Page-1" id="PVYINY_1FkBlSDD6XiwF">
+    <mxGraphModel dx="1077" dy="599" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="mb5K22AN1fkLNBq5cybl-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.482;entryY=-0.01;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="mb5K22AN1fkLNBq5cybl-1" target="mb5K22AN1fkLNBq5cybl-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="mb5K22AN1fkLNBq5cybl-1" value="тело цикла" style="shape=step;perimeter=stepPerimeter;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="320" width="250" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="mb5K22AN1fkLNBq5cybl-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.482;entryY=0.995;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="mb5K22AN1fkLNBq5cybl-2" target="mb5K22AN1fkLNBq5cybl-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="mb5K22AN1fkLNBq5cybl-2" value="ВЫВОД НА ЭКРАНЕ" style="shape=step;perimeter=stepPerimeter;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="1">
+          <mxGeometry x="420" y="650" width="250" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="mb5K22AN1fkLNBq5cybl-7" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fillColor=#f8cecc;strokeColor=#b85450;curved=1;" edge="1" parent="1" source="mb5K22AN1fkLNBq5cybl-5" target="mb5K22AN1fkLNBq5cybl-1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="720" y="550" />
+              <mxPoint x="720" y="260" />
+              <mxPoint x="185" y="260" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mb5K22AN1fkLNBq5cybl-5" value="CONTINUE" style="shape=step;perimeter=stepPerimeter;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="1">
+          <mxGeometry x="414" y="510" width="250" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="mb5K22AN1fkLNBq5cybl-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="mb5K22AN1fkLNBq5cybl-6" target="mb5K22AN1fkLNBq5cybl-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="mb5K22AN1fkLNBq5cybl-6" value="BREAK" style="shape=step;perimeter=stepPerimeter;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="1">
+          <mxGeometry x="414" y="390" width="250" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="mb5K22AN1fkLNBq5cybl-8" value="ВЫХОД" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="1">
+          <mxGeometry x="833" y="470" width="120" height="80" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
