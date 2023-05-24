@@ -1,6 +1,7 @@
 ########################################################################################################################
 # TODO цикл по итераторам for
 import datetime
+import time
 
 list_val1 = [1, 2, 3, 4, 5, 6]
 for i in list_val1:
@@ -97,13 +98,44 @@ while stop_value <= 100:
     stop_value = stop_value + 1
 print(res)
 
-while True:
-    val = input("Тебе больше 18? ")
-    if int(val) >= 18:
-        break
+# while True:
+#     val = input("Тебе больше 18? ")
+#     if int(val) >= 18:
+#         break
 
 # while True:
 #     print("Привет")
 
 
 # таймер чч:мм:сс -> .EXE
+
+
+print("\n\n\n***********\n\n\n")
+
+# каждую секунду добавления 1 секунда
+# при достижении 60 секунд == + 1 минута, и обнуление секунд
+# при достижении 60 минут == + 1 час, и обнуление минута и обнуление секунд
+# при достижении 24 часов == + обнуление час, и обнуление минута и обнуление секунд
+
+seconds = 0
+minutes = 0
+hours = 0
+speed = float(input("Введите скорость 'тика': "))
+
+while True:
+    seconds += 1
+    if seconds > 59:
+        minutes += 1
+        seconds = 0
+    if minutes > 59:
+        hours += 1
+        minutes = 0
+        seconds = 0
+
+    time.sleep(speed)  # 1.0 = 0.5 + 0.5 | 2x  # 1.0 = 0.1 + 0.1 ... | 10x  # 1.0 = 5.0 + 0.1 ... | 5x
+
+    print(f"{hours:02d}:{minutes:02d}:{seconds:02d}")
+    # if hours >= 10:
+    #     print(f"{hours}:{f'0{minutes}' if minutes < 10 else minutes}:{seconds:02d}")
+    # else:
+    #     print(f"0{hours}:{f'0{minutes}' if minutes < 10 else minutes}:{seconds:02d}")
