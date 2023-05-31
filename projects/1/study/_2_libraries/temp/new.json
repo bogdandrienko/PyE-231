@@ -1,0 +1,9 @@
+{
+   "firstName": "Иван",
+   "isMarried": true,
+   "age": 22,
+   "phoneNumbers": [
+       "812 123-1234",
+       "916 123-4567"
+   ]
+}
