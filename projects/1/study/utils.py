@@ -1,5 +1,5 @@
 def get_square(x):
-    return (x ** 2) / a
+    return (x ** 2) / 2
 
 
 def get_sum(x, y):
