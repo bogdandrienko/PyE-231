@@ -183,7 +183,7 @@ create_folder_in_this_dir("temp2")
 # надпись 'Python is awesome'
 
 current_path = "."  # relative - относительный
-top_path = "../temp"  # relative - относительный
+top_path = "../for_clean/temp"  # relative - относительный
 txt = 'Python is awesome'
 if not os.path.exists(top_path):
     os.mkdir(top_path)
