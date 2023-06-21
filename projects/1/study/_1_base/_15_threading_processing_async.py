@@ -62,7 +62,7 @@ def sync_download_mass_image():
     # sync_download_one_image()
 
     # загрузка 10 картинок в этом потоке
-    for i in range(1, 1 + 1):
+    for i in range(1, 10 + 1):
         sync_download_one_image()
 
     print(f'Задача закончила работу за {round(time.perf_counter() - start_time, 5)}')
@@ -202,3 +202,5 @@ if __name__ == "__main__":
     # 3. загрузить параллельно (threading) 10 файлов, и замерить производительность (декоратор)
     # 4. загрузить параллельно (multiprocessing) 10 файлов, и замерить производительность (декоратор)
     # https://github.com/bogdandrienko/PyE-231/blob/main/projects/1/study/_1_base/_15_threading_processing_async.py
+
+    # Практика: реализовать приложение с интерфейсом (таймер)

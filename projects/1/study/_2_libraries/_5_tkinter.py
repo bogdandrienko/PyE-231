@@ -73,7 +73,7 @@ if __name__ == "__main__":
     label_result = tk.Label(window, text="-", font=("Arial Bold", 25))
     label_result.grid(column=1, row=1)
 
-    button_start = tk.Button(window, text="Не нажимать!", command=clicked, font=("Arial Bold", 25))
+    button_start = tk.Button(window, text="Не нажимать!", command=timer, font=("Arial Bold", 25))
     button_start.grid(column=2, row=2)
 
     # цикл событий - отрисовка окна
