@@ -1,5 +1,8 @@
+import threading
+import time
+
 from PyQt6.QtCore import QRect
-from PyQt6.QtWidgets import QApplication, QWidget, QLabel, QLineEdit, QTextEdit, QGridLayout
+from PyQt6.QtWidgets import QApplication, QWidget, QLabel, QLineEdit, QGridLayout, QPushButton, QCheckBox, QTextEdit
 import sys
 import datetime
 import sqlite3
@@ -52,50 +55,113 @@ ORDER BY id DESC;
     return rows_raw
 
 
+def delete_db() -> None:
+    query_str = '''
+DELETE FROM notes;
+'''
+    query(query_str)
+
+
 def test_db():
     # create_db()
     # insert_db("Купить слона")
     print(select_db())
-    insert_db("Купить слона")
+    # insert_db("Купить слона")
     print(select_db())
+
+
+def get_data_ph():
+    # TODO - как в другом потоке обновлять объект
+    # thread = threading.Thread(target=get_data, args=(), kwargs={})
+    # thread.start()
+    pass
+
+
+def get_data():
+    time.sleep(1.0)
+
+    rows_raw = select_db()
+    # print(rows_raw)
+    data_str = ""
+    for row in rows_raw:
+        data_str += f'#{row[0]} {row[1]} ({"Выполнено" if int(row[2]) == 1 else "Не выполнено"}) [{row[3]}]'
+    # print(data_str)
+    # [
+    # (4, 'Купить кота', '0', '2023-06-26 21:01:57.061831'),
+    # (3, 'Купить верблюда', '1', '2023-06-26 21:00:52.221044'),
+    # (2, '1111111111111111111111', '1', '2023-06-26 20:59:41.901095'),
+    # (1, 'Купить слона', '0', '2023-06-26 20:22:13.896782')
+    # ]
+
+    # 0.1
+    return data_str
+
+
+def send_data():
+    text = str(edit_title.text())
+    status = bool(check_box.isChecked())
+    # print(select_db())
+    insert_db(title=text, status=status)
+    # print(select_db())
+
+    edit_title.setText("")
+    check_box.setChecked(False)
+
+    text_data.setText(get_data())
+
+
+def reset_data():
+    delete_db()
+
+    text_data.setText(get_data())
 
 
 if __name__ == "__main__":
     # Приложение для публикации "заметок" и их вывода на экран
+
     # Практика: сохранение данных в базу данных и чтение данных из файла (excel - export/import)
+    # Система экспорта-импорта, конвертация.
+    # text_edit - путь к файлу(имя файла)
+    # две кнопки - импортировать - берёт данные из указанного excel файла(наименование, количество, цена)
+    #           - экспортировать - берёт данные из базы данных (id, наименование, количество, цена) и записывает в новый excel файл
 
     # https://build-system.fman.io/qt-designer-download
     # https://habr.com/ru/companies/skillfactory/articles/599599/
     app = QApplication(sys.argv)
     window = QWidget()
     window.setWindowTitle("Название окна")
-    window.setGeometry(QRect(200, 200, 1280, 720))
+    window.setGeometry(QRect(200, 200, 640, 480))
     window.setMinimumSize(640, 480)
     window.setMaximumSize(3840, 2160)
-
-    title = QLabel('Title')
-    author = QLabel('Author')
-    review = QLabel('Review')
-
-    titleEdit = QLineEdit()
-    authorEdit = QLineEdit()
-    reviewEdit = QTextEdit()
 
     grid = QGridLayout()
     grid.setSpacing(10)
 
-    grid.addWidget(title, 1, 0)
-    grid.addWidget(titleEdit, 1, 1)
+    label_title = QLabel('Наименование задачи')
+    grid.addWidget(label_title, 0, 0)
 
-    grid.addWidget(author, 2, 0)
-    grid.addWidget(authorEdit, 2, 1)
+    text_data = QTextEdit(get_data())
+    grid.addWidget(text_data, 3, 3)
 
-    grid.addWidget(review, 3, 0)
-    grid.addWidget(reviewEdit, 3, 1, 5, 1)
+    edit_title = QLineEdit()
+    grid.addWidget(edit_title, 0, 1)
+
+    label_check = QLabel('Статус задачи')
+    grid.addWidget(label_check, 0, 2)
+
+    check_box = QCheckBox()
+    grid.addWidget(check_box, 0, 3)
+
+    button_start = QPushButton('сохранить')
+    button_start.clicked.connect(send_data)
+    grid.addWidget(button_start, 1, 1)
+
+    button_reset = QPushButton('сбросить')
+    button_reset.clicked.connect(reset_data)
+    grid.addWidget(button_reset, 2, 1)
 
     window.setLayout(grid)
 
     window.show()
     app.exec()
-
     pass
