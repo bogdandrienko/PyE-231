@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-06-26T14:23:44.728Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36" etag="pbTm_fP0h4MNoj1ACvhq" version="21.5.0" type="device">
+<mxfile host="app.diagrams.net" modified="2023-06-26T15:41:35.595Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36" etag="wB52B_APzYlrXE3F1o8B" version="21.5.0" type="device">
   <diagram name="Page-1" id="ccuqUHd1XDMg7ZFis-xQ">
     <mxGraphModel dx="744" dy="1578" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -20,7 +20,7 @@
           <mxGeometry x="80" y="220" width="140" height="40" as="geometry" />
         </mxCell>
         <mxCell id="J8yey-CO9rCHf4NEBlgV-7" value="весь текст" style="shape=card;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="270" y="160" width="224" height="190" as="geometry" />
+          <mxGeometry x="276" y="160" width="224" height="190" as="geometry" />
         </mxCell>
         <mxCell id="J8yey-CO9rCHf4NEBlgV-8" value="sqlite" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
           <mxGeometry x="280" y="-80" width="60" height="80" as="geometry" />
