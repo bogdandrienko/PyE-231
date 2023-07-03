@@ -171,12 +171,12 @@ def processing_download_mass_image():
 
 async def async_download_one_image():
     # time.sleep(0.1)
-    await asyncio.sleep(0.1)
-    # async with aiohttp.ClientSession() as session:
-    #     async with session.get(url=url, headers=headers) as response:
-    #         data = await response.read()
-    #         with open(f"temp/image{random.randint(1, 10000000)}.jpg", "wb") as opened_file:
-    #             opened_file.write(data)
+    # await asyncio.sleep(0.1)
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url=url, headers=headers) as response:
+            data = await response.read()
+            with open(f"temp/image{random.randint(1, 10000000)}.jpg", "wb") as opened_file:
+                opened_file.write(data)
 
 
 def async_task():

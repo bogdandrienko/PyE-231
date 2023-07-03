@@ -265,3 +265,31 @@ ch1 = Child2(10)
 print("\n\n\n")
 print(ch1.get_value())
 
+
+########################################################################################################################
+
+########################################################################################################################
+# TODO classmethod and staticmethod
+from datetime import date
+
+class Person:
+    def __init__(self, name: str, age: int | float):
+        self.name = name
+        self.age = age
+
+    @classmethod  # - помогает конструировать класс
+    def from_birth_year(cls, name, year):
+        return cls(name, date.today().year - year)
+
+    @staticmethod  # - не требует экземпляра для вызова
+    def is_adult(age: int | float) -> bool:
+        return age > 18
+
+
+person1 = Person('Maya', 21)
+person2 = Person.from_birth_year('Maya', 1996)
+
+print(person1.age)
+print(person2.age)
+
+print(Person.is_adult(22))
