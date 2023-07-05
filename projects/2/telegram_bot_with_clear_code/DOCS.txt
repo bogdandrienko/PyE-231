@@ -1,0 +1,41 @@
+1. Настройка окружения
+
+https://www.python.org/downloads/
+https://git-scm.com/
+https://desktop.github.com/
+https://nodejs.org/en
+
+2. Настройка IDE
+
+3. Командная разработка:
+1. Стили + review
+
+https://pythonworld.ru/osnovy/pep-8-rukovodstvo-po-napisaniyu-koda-na-python.html#section-3
+https://www.jetbrains.com/ru-ru/pycharm/download/?section=windows
+
+plugins: black connect | pylint | tabnine | prettier
+libraries: black[d] | pylint
+
+
+2. Паттерны и парадигмы
+
+* ООП
+* DRY - не повторять код
+* SOLID, KISS ...
+* django MVT (MVC) - .net MVVM
+
+3.
+
+
+
+
+platforms: heroku, pythonanywhere, raiway...
++ легко (в одну кнопку)
+- недостаточно гибко (только ограниченный функционал)
+
+hostings: oblako.kz (4000, но можно на час), ps.kz(3000), hoster.kz (2400)...
++ полный доступ к операционной системе (linux-ubuntu)
+- сложнее настройке и дороже
+
+
+

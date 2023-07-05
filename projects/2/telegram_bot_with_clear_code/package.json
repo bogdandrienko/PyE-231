@@ -1,0 +1,68 @@
+{
+  "id": "5537412973224890999",
+  "from": {
+    "id": 1289279426,
+    "is_bot": false,
+    "first_name": "Bogdan",
+    "username": "bogdandrienko",
+    "language_code": "ru"
+  },
+  "message": {
+    "message_id": 99,
+    "from": {
+      "id": 6098525740,
+      "is_bot": true,
+      "first_name": "bot_trader_777",
+      "username": "trader_777_bot"
+    },
+    "chat": {
+      "id": 1289279426,
+      "first_name": "Bogdan",
+      "username": "bogdandrienko",
+      "type": "private"
+    },
+    "date": 1688586735,
+    "reply_to_message": {
+      "message_id": 98,
+      "from": {
+        "id": 1289279426,
+        "is_bot": false,
+        "first_name": "Bogdan",
+        "username": "bogdandrienko",
+        "language_code": "ru"
+      },
+      "chat": {
+        "id": 1289279426,
+        "first_name": "Bogdan",
+        "username": "bogdandrienko",
+        "type": "private"
+      },
+      "date": 1688586735,
+      "text": "/tovars",
+      "entities": [
+        {
+          "type": "bot_command",
+          "offset": 0,
+          "length": 7
+        }
+      ]
+    },
+    "text": "Выберите одну из кнопок:",
+    "reply_markup": {
+      "inline_keyboard": [
+        [
+          {
+            "text": "#2 Ботинки [12600] (2)",
+            "callback_data": "get_tovar"
+          },
+          {
+            "text": "#1 Кроссовки [2600] (4)",
+            "callback_data": "get_tovar"
+          }
+        ]
+      ]
+    }
+  },
+  "chat_instance": "109525917276613590",
+  "data": "get_tovar"
+}
