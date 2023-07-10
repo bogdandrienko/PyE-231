@@ -38,4 +38,24 @@ hostings: oblako.kz (4000, но можно на час), ps.kz(3000), hoster.kz 
 - сложнее настройке и дороже
 
 
+sudo nano /etc/systemd/system/my_python_bot.service
+##################################################
+[Unit]
+Description=My Python Service
+After=network.target
 
+[Service]
+User=root
+Group=root
+WorkingDirectory=/root/web/tele_bot
+ExecStart=/root/web/tele_bot/env/bin/python /root/web/tele_bot/_8_aiogram.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+##################################################
+
+sudo systemctl daemon-reload
+sudo systemctl start my_python_bot.service
+sudo systemctl enable my_python_bot.service
+sudo systemctl status my_python_bot.service

@@ -9,7 +9,8 @@ from aiogram.types import Message
 
 #
 
-bot = Bot(token="6098525740:AAGQVVzGA3mE4qvhx-YUYFncz2FzEe-9jRk")
+PROXY_URL = "http://proxy.server:3128"
+bot = Bot(token="6098525740:AAGQVVzGA3mE4qvhx-YUYFncz2FzEe-9jRk", proxy=PROXY_URL)
 storage = MemoryStorage()
 dp = Dispatcher(bot, storage=storage)
 
