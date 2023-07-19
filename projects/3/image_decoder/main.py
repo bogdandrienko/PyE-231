@@ -1,11 +1,13 @@
 import datetime
 import os
 import random
+import numpy as np
 import cv2
 import sys
 from PyQt6.QtCore import QRect, Qt
 from PyQt6.QtGui import QIcon
-from PyQt6.QtWidgets import QApplication, QWidget, QLabel, QLineEdit, QGridLayout, QPushButton, QCheckBox, QSlider, QComboBox
+from PyQt6.QtWidgets import QApplication, QWidget, QLabel, QLineEdit, QGridLayout, QPushButton, QCheckBox, QSlider, \
+    QComboBox
 
 
 class Docs:
@@ -131,6 +133,86 @@ class OpenCv:
             cv2.imshow("Display img2", img2)
             cv2.waitKey(0)
 
+        @staticmethod
+        def find_face_image():
+            src = cv2.imread(cv2.samples.findFile("src/avatars/Tom.jpg"), cv2.IMREAD_COLOR)
+            # src = cv2.imread(cv2.samples.findFile("src/avatars/img1.jpeg"), cv2.IMREAD_COLOR)
+            img = src.copy()
+            height, width, channels = img.shape  # (1920, 1080, 3)
+            gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+            haar_cascade = cv2.CascadeClassifier('src/cascadeHaare.xml')
+            faces_rect = haar_cascade.detectMultiScale(gray_img, scaleFactor=1.1, minNeighbors=4)
+
+            def one():
+                x, y, w, h = faces_rect[0]  # 381 184 416 416
+                multiply_h: int = int(240 * (height / 1920))
+                multiply_w: int = int(200 * (width / 1920))  # 1280==70 | 1920==100 | 3840==200 |
+
+                y1 = y - multiply_h
+                y2 = y + h + multiply_h
+                x1 = x - multiply_w
+                x2 = x + w + multiply_w
+                print(height, width, channels)
+                print(multiply_h, multiply_w)
+                print(y1, y2, x1, x2)
+                cv2.imshow(
+                    "cropped",
+                    img[y1:y2, x1:x2]
+                )  # y1:y2, x1:x2
+                cv2.imshow('face', img)
+                cv2.imshow('src', src)
+                cv2.waitKey(0)
+
+            def many():
+                print("старт обработки")
+                index = 0
+                for (x, y, w, h) in faces_rect:
+                    if w < 50 or h < 50:
+                        continue
+                    cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)
+                    index += 1
+                    multiply_h: int = int(240 * (height / 1920))
+                    multiply_w: int = int(200 * (width / 1920))  # 1280==70 | 1920==100 | 3840==200 |
+                    y1 = y - multiply_h
+                    y2 = y + h + multiply_h
+                    x1 = x - multiply_w
+                    x2 = x + w + multiply_w
+                    print(height, width, channels)
+                    print(multiply_h, multiply_w)
+                    print(y1, y2, x1, x2)
+                    cv2.imshow(f"cropped {index}", img[y1:y2, x1:x2])  # y1:y2, x1:x2
+                # cv2.imshow(f'src {index}', src)
+                cv2.imshow(f'face {index}', img)
+                cv2.waitKey(0)
+
+            # one()
+            many()
+
+        @staticmethod
+        def processing_video():
+            # speed: float = 1.0
+            # speed: float = 0.5
+            speed: float = 2.5
+            cap: cv2.VideoCapture = cv2.VideoCapture('src/video.mp4')
+            haar_cascade = cv2.CascadeClassifier('src/cascadeHaare.xml')
+            while cap.isOpened():
+                ok, frame = cap.read()  # читает следующий кадр
+                if not ok:
+                    break
+                gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+                thresh = cv2.adaptiveThreshold(gray, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY_INV, 11, 2)
+                faces_rect = haar_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=4)
+                for (x, y, w, h) in faces_rect:
+                    if w < 20 or h < 20:
+                        continue
+                    cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 2)
+                cv2.imshow('Frame', frame)
+                cv2.imshow('thresh', thresh)
+                if cv2.waitKey(int(24 / speed)) & 0xFF == ord('q'):
+                    break
+            cap.release()
+            cv2.destroyAllWindows()
+
 
 class Ui:
     def __init__(self):
@@ -222,4 +304,5 @@ class Ui:
 
 
 if __name__ == "__main__":
-    ui = Ui()
+    # ui = Ui()
+    OpenCv.Example.processing_video()
