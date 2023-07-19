@@ -1,0 +1,81 @@
+{% extends "components/base.html" %}
+
+{% block main %}
+
+
+    <ul class="">
+    {% if 1 == 2 %}
+    {% else %}
+    {% endif %}
+
+    {% for todo in todos %}
+        <li>{{ todo.title }}</li>
+    {% else %}
+        <li>Данные не получено</li>
+    {% endfor %}
+    </ul>
+
+
+
+
+<div>
+          <h4 class="fst-italic">Recent posts</h4>
+          <ul class="list-unstyled">
+
+
+
+
+{%  for book in books %}
+            <li>
+              <a class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top" href="#">
+                <svg class="bd-placeholder-img" width="100%" height="96" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"></rect></svg>
+                <div class="col-lg-8">
+                  <p class="small text-secondary">
+                      {%  for category in book.categories %}
+                          <div class="m-1 btn btn-sm btn-outline-dark">{{ category.name }}</div>
+                      {% else %}
+                          <div class="m-1 btn btn-sm btn-outline-dark">Без категорий</div>
+                      {% endfor %}
+                  </p>
+                  <h6 class="mb-0">{{ book.title }}</h6>
+                    <p class="small text-secondary">{{ book.description }}...</p>
+                  <small class="text-body-secondary">January 15, 2023</small>
+                </div>
+              </a>
+            </li>
+{% else %}
+<div class="lead">Книг не найдено!</div>
+{% endfor %}
+
+          </ul>
+        </div>
+
+
+
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 g-2">
+
+
+        <div class="col">
+          <div class="card shadow-sm">
+            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">
+                </text></svg>
+            <div class="card-body">
+              <p class="card-text"></p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                </div>
+                <small class="text-body-secondary">9 mins</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+{% endblock main %}
