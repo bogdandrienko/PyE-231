@@ -1,6 +1,48 @@
 https://www.youtube.com/playlist?list=PLFH0jFGRecS0hfhvtS93WrEKFmcQwM1cs
-
 https://github.com/bogdandrienko/PyE-231
+https://chat.openai.com/
+https://discord.gg/hCNmpbEe
+
+
+https://bogdandrienko.atlassian.net/jira/software/projects/PYE231/boards/6
+https://www.python.org/
+https://www.jetbrains.com/ru-ru/pycharm/
+https://youtu.be/Qy76HUfDcNA
+
+
+# Веб-Приложение для отслежования посылок*
+
+# 0. (Core) Идея / "Киллер фича"
+* Поиск 
+* Система модерации (+ контент) | автосканер
+* регистрация|логин
+* уведомления в телеграм бота
+
+# 1. Тех. задание
+* Защита программиста (Вы всё правильно поняли)
+
+# 2. Написание кода
+
+
+# 3. Тестирование кода
+
+
+# 4. Публикация
+
+
+
+
+
+
+########################################################
+
+# создаёт виртуальное окружение (разработка Python должна происходить в песочнице)
+python -m venv env  # python3 -m venv env
+
+
+
+
+
 
 
 

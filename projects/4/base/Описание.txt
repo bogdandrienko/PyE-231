@@ -1,0 +1,32 @@
+0. Кто я такой, опыт, стек технологий (resume)
+Резюме
+Сопроводительное (pet-проекты, лучший проект, GitHub)
+...
+1. Python (Data sience, mashine learn, computer vision, parsing)
+2. Django MVT () !React & Vue & Node & Angular!
+3. Django DRF ()
+4. Go
+
+1. Кто такие программисты и чем они занимаются (Git + GitHub/Gitlub)
+https://github.com/bogdandrienko/
+https://git-scm.com/
+https://desktop.github.com/
+
+2. Кто даёт задачи программистам? (Jira / Confluence / Trello)
+Опытный коллега или наставник, менеджер, тимлид, заказчик
+https://www.atlassian.com/ru/software/jira
+
+3. Что такое язык программирование и фреймворк (app.diagrams.net)
+https://app.diagrams.net/
+https://www.simplilearn.com/best-programming-languages-start-learning-today-article
+https://www.python.org/downloads/
+
+4. IDE
+https://code.visualstudio.com/
+https://www.jetbrains.com/pycharm/download/
+
+https://chat.openai.com/
+
+ДЗ:
+1. Завести гитхаб и первый репозиторий (скинуть мне ссылку)
+2. Собрать "выжимку" с 30-70 вакансий, в 1 текстовый файл.
