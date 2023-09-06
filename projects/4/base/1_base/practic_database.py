@@ -31,8 +31,9 @@ def teory():
     https://www.enterprisedb.com/downloads/postgres-postgresql-downloads
 
     Не релятивные(NO SQL)
-    MongoDB - (json, 10 000 000 000)
-    Redis - key-value (огромный словарь)
+    MongoDB, ClickHouse - (json, 10 000 000 000)
+    Redis, MemCache - key-value (огромный словарь)
+    RabbitMQ, Kafka - queue (очередь)
 
 
 
