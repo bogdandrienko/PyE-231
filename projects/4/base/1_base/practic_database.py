@@ -70,6 +70,9 @@ def teory():
     
     SELECT * FROM news;
     
+# id, title, price, datatime
+# id, title, description, _ = db(SELECT * FROM news;)
+    
     /*
     SELECT id, title, price from news -- время, экономия памяти, экономия трафика
     WHERE price >= 300 -- фильтрация(условия)
