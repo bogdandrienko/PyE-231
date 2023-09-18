@@ -1,0 +1,4 @@
+{'name': 'Вася', 'position': 'Инженер', 'salary': 103499.99999999999, 'is_reserved': True, 'data_registered': '2023-01-01 00:00:00'}
+{'name': 'Петя', 'position': 'Сис.админ', 'salary': 103499.99999999999, 'is_reserved': True, 'data_registered': '2023-01-02 00:00:00'}
+{'name': 'Вася', 'position': 'Инженер', 'salary': 103499.99999999999, 'is_reserved': True, 'data_registered': '2023-01-03 00:00:00'}
+{'name': 'Петя', 'position': 'Сис.админ', 'salary': 80500.0, 'is_reserved': True, 'data_registered': '2023-01-04 00:00:00'}
