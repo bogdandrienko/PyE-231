@@ -5,7 +5,7 @@ class Valute:
     def __init__(self, name: str, symbol: str, priceUSD: float):
         self.name = str(name)
         self.symbol = str(symbol)
-        self.priceUSD = float(priceUSD[1:].replace(',', ''))
+        self.priceUSD = float(priceUSD[1:].replace(",", ""))
 
     def __repr__(self):
         return f"<Valute {self.name} {self.symbol} {self.priceUSD}>"

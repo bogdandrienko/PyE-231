@@ -34,14 +34,11 @@ class Ui(QWidget):
 
         # news
         url = "http://127.0.0.1:8000/api/news"
-        headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (HTML, like Gecko) '
-                          'Chrome/102.0.0.0 Safari/537.36'
-        }
+        headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (HTML, like Gecko) " "Chrome/102.0.0.0 Safari/537.36"}
         response = requests.get(url=url, headers=headers).json()
-        news = response['news']
-        message = ''
+        news = response["news"]
+        message = ""
         for i in news:
-            message += f'{i}\n'
+            message += f"{i}\n"
         self.ui.labelData.setText(message)
         pass

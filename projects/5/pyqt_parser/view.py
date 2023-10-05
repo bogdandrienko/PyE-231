@@ -2,7 +2,6 @@ import time
 import concurrent.futures
 import aiohttp
 from bs4 import BeautifulSoup
-
 from model import Valute
 
 
@@ -32,17 +31,14 @@ async def async_request(url: str, headers: dict) -> str:
 
 
 async def get_valutes(url: str, filter_by_price: float) -> list[Valute]:
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (HTML, like Gecko) '
-                      'Chrome/102.0.0.0 Safari/537.36'
-    }
+    headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (HTML, like Gecko) " "Chrome/102.0.0.0 Safari/537.36"}
 
     # получение ответа в формате str
     response = await async_request(url=url, headers=headers)
     # парсинг ответа в объект BeautifulSoup
-    soup = BeautifulSoup(response, 'html.parser')
+    soup = BeautifulSoup(response, "html.parser")
     # поиск всех тэгов "tbody", взятие первого
-    tbody = soup.find_all('tbody')[0]
+    tbody = soup.find_all("tbody")[0]
     # разделение всего текста на блоки
     lines = tbody.text.split("\n")
     # фильтрация (отбрасывает все "пустые строки")

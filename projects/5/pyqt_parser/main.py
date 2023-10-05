@@ -4,10 +4,10 @@ from ui import Ui
 
 if __name__ == "__main__":
     """
-MVP:
-1. Ядро
-2. Обёртка
-3. Мясо(доп фичи)
+    MVP:
+    1. Ядро
+    2. Обёртка
+    3. Мясо(доп фичи)
     """
 
     app = QApplication(sys.argv)
