@@ -71,11 +71,10 @@ init - инициализатор для создания "сырой сущно
 new - конструктор для воссоздания каких-то преднастроек для класса
 
 class Father:
-    # def __new__(cls, *args, **kwargs):  # class
-    #     instance = super().__new__(cls)
-    #     instance.calculate()
-    #     # В этом месте можно настроить свой экземпляр класса...
-    #     return instance
+    def __new__(cls, *args, **kwargs):  # class
+        instance = super().__new__(cls)
+        # В этом месте можно настроить свой экземпляр класса
+        return instance
 
     def __init__(self, val):
         self.val = val
@@ -434,16 +433,17 @@ What are Python Decorators?
 ###########################################################
 
 """
+import random
 
-def func1(list1: list=None):  # для мутабельных(изменяемых) объектов, нельзя задавать стандартное значение
-    if list1 is None:
-        list1 = []
-    list1.append(1)
-    print(list1)
+# def func1(list1: list=None):  # для мутабельных(изменяемых) объектов, нельзя задавать стандартное значение
+#     if list1 is None:
+#         list1 = []
+#     list1.append(1)
+#     print(list1)
 
-func1()
-func1()
-func1()
+# func1()
+# func1()
+# func1()
 
 
 # list2 = [1, 2, 3]
@@ -455,21 +455,21 @@ func1()
 #     pass
 # print(tuple1)
 
-data = (["tuple"], "str")
-try:
-    data[0] += ["list"]
-except:  # неожиданное поведение!
-    print(data)
-
-abs()  # built-in
-
-def abs():  # global
-    pass
-
-def sum1():
-    def abs(): # local
-        pass
-    abs()
+# data = (["tuple"], "str")
+# try:
+#     data[0] += ["list"]
+# except:  # неожиданное поведение!
+#     print(data)
+#
+# abs()  # built-in
+#
+# def abs():  # global
+#     pass
+#
+# def sum1():
+#     def abs(): # local
+#         pass
+#     abs()
 
 """
 
@@ -520,20 +520,20 @@ def test_register_user(user: User):
 
 """
 
-class User:
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
-
-    def computed(self):
-        return f"{self.name}_{self.age}"
-
-l1 = [User(1), User(2), ...]
-
-
-def computed(i):
-    return f"{i['name']}_{i['age']}"
-l2 = [{"name": 1, "age": 2}, {"name": 1, "age": 2}, ...]
+# class User:
+#     def __init__(self, name, age):
+#         self.name = name
+#         self.age = age
+#
+#     def computed(self):
+#         return f"{self.name}_{self.age}"
+#
+# l1 = [User(1), User(2), ...]
+#
+#
+# def computed(i):
+#     return f"{i['name']}_{i['age']}"
+# l2 = [{"name": 1, "age": 2}, {"name": 1, "age": 2}, ...]
 
 # MVP - minimal varable product
 
@@ -550,3 +550,31 @@ from functools import lru_cache
 
 # у вас сервер на ubuntu, оперативы хватает на 10
 # home, pricing, pricing 1, .. pricing 9
+
+if __name__ == '__main__':
+    class Father:
+        def __new__(cls, *args, **kwargs):  # class
+            # конструктор - обычно стандартный
+            print("Вызван __new__")
+            instance = super().__new__(cls)
+
+            rand1 = random.randint(0, 1)
+            if rand1:
+                return 2
+
+            # В этом месте можно настроить свой экземпляр класса
+            return instance
+
+        def __init__(self, val):
+            # инициализатор
+            print("Вызван __init__")
+            self.val = val
+
+        def calculate(self):
+            print("Вызван calculate")
+            self.val *= 2
+
+
+    f1 = Father(12)  # __new__ -> __init__
+    f1.calculate()
+    print(f1.val)
