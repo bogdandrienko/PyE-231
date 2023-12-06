@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Стандартное название страницы{% endblock title %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+{% include "components/navbar.html" %}
+{% block main %}No data!{% endblock main %}
+{% include "components/footer.html" %}
+</body>
+</html>

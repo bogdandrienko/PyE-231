@@ -1,0 +1,10 @@
+{
+  "data":
+    [
+      {"id":  1, "name": "Кроссовки", "price":  6500, "count":  5},
+      {"id":  2, "name": "Рубашка", "price":  4500, "count":  2},
+      {"id":  3, "name": "Джинсы", "price":  9500, "count":  0},
+      {"id":  4, "name": "Кепка", "price":  700, "count":  1},
+      {"id":  5, "name": "Арбуз", "price":  300, "count":  3}
+    ]
+}
