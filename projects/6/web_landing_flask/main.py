@@ -1,5 +1,6 @@
 from flask import Flask, render_template
 import json
+import requests
 
 app = Flask(__name__)
 
@@ -57,14 +58,45 @@ def pricing():
     questions = {"title": {"name": "Опросник"}}
     answers = [5, 4, 3, 2, 1]
     is_age = False
+    return render_template('pricing.html', is_age=is_age, name="Уалихан", answers=answers, count=count, questions=questions, price=price,
+                           new_data=new_data)
 
-    return render_template('pricing.html', is_age=is_age, name="Уалихан", answers=answers, count=count, questions=questions, price=price, new_data=new_data)
 
+@app.route("/news")
+def news():
+    # 1. api - https://fakenews.squirro.com/news/sport
+    # 2. parsing - web + bs4
+    # 3. scrapping - selenium
+    data = requests.get("https://fakenews.squirro.com/news/sport").json()
+
+    # n1 = data.get('news', [])  # safe - если такого ключа нет, то верётся default
+    # n2 = data['news']  # unsafe - если такого ключа нет, то возбуждается Exception
+    # unsafe - используется, когда нужно вызывать ошибку при отсутствии ключа
+
+    # username = request.GET['username']
+    # username = request.GET.get('username', None)
+    # if username is None:
+    #     raise Exception("username not found")
+    # password = request.GET["password"]
+    # patronomyc = request.GET.get('patronomyc', "")
+
+    # page = 1
+    # text = data['text']
+    # text = data.get('text', '')
+    # https://hh.ru/search/vacancy?text=Python&area=6322&hhtmFrom=main&hhtmFromLabel=vacancy_search_line
+
+    return render_template('news.html', news=data.get('news', []))
+
+
+def get_safe(d: dict, key: str, default=None) -> any:
+    try:
+        return d[key]
+    except KeyError:  # key not found
+        return default
 
 
 def hi():
     print("Hi, Уалихан!")
-
 
 
 hi()

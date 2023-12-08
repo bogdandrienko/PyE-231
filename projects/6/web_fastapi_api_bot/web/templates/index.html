@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Отправить рассылку</title>
+</head>
+<body>
+<h1>Отправить рассылку:</h1>
+<form method="post" action="/submit" enctype="multipart/form-data">
+    <label>Вставьте сюда файл</label>
+    <input name="addition" type="file" accept=".xlsx,.xls" required/>
+    <input name="username" type="text" placeholder="введите сюда имя"/>
+    <button type="submit">Отправить</button>
+</form>
+</body>
+</html>
