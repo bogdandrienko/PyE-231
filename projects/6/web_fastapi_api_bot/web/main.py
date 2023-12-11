@@ -1,11 +1,17 @@
-from fastapi import FastAPI, Request, Depends
-from fastapi.templating import Jinja2Templates
+import datetime
 import openpyxl
 from openpyxl.workbook import Workbook
 from openpyxl.worksheet.worksheet import Worksheet
 import io
-import aiosqlite
 import sqlite3
+# async
+# import aioredis
+import aiosqlite
+import aiohttp
+import aiofiles
+from starlette.responses import RedirectResponse
+from fastapi.templating import Jinja2Templates
+from fastapi import FastAPI, Request, Depends
 
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
@@ -21,9 +27,9 @@ async def submit(request: Request):
     # form = await request.json()
     # input_text = form_data.get("input_text")
     # print(form)
-    form_data = await request.form()
+    form_data = await request.form()  # пока форма грузится, можно жарить яйца
     file = form_data["addition"]
-    f = await file.read()
+    f = await file.read()  # пока форма грузится, можно жарить яйца
     # print(type(await file.read()), await file.read())
     workbook: Workbook = openpyxl.load_workbook(filename=io.BytesIO(f), data_only=True)
     worksheet: Worksheet = workbook.active
@@ -50,8 +56,8 @@ CREATE TABLE IF NOT EXISTS items (
     description TEXT NOT NULL,
     price REAL default 0.0,
     quantity INTEGER default 0
-)''')
-        await db.commit()
+)''')  # пока форма грузится, можно жарить яйца
+        await db.commit()  # пока форма грузится, можно жарить яйца
 
         # SQL Injection - уязвимость в БД
         # пришли данные, из файла, из input(html form)...
@@ -61,24 +67,34 @@ CREATE TABLE IF NOT EXISTS items (
 # VALUES ({data[0]}, 'Боты', 'Удобные боты', 70.5, 3)
 # ''')
         it = clear_data[0]
+        beaty = f"[{it[0]}] {it[1]} - {it[2][:30]} ... {it[3]}$ | {it[4]}"
         print(it)
+        # INSERT OR REPLACE INTO items (id, name, description...)
+        # UPSERT(UPDATE OR INSERT)
         await db.execute('''
 INSERT INTO items (id, name, description, price, quantity)
 VALUES (:id, :name, :description, :price, :quantity)
 ''', {"id": it[0], "name": it[1], "description": it[2], "price": it[3], "quantity": it[4]})  # todo sql injection SAFE
         # placeholder - держатель места (ЗАГЛУШКА)
-        await db.commit()
+        await db.commit()  # пока форма грузится, можно жарить яйца
 
-    # async with aiosqlite.connect('mydatabase.db') as db:
-    #     # Выполняем SELECT-запрос
-    #     cursor = await db.execute('SELECT * FROM items')
-    #     rows = await cursor.fetchall()
-    #     await cursor.close()
-    #     return rows
+    bot_token = "6669581355:AAEcK9yBwL_D2tZi8W6zUVup04STZYkStIE"
+    users = '1289279426,431390376,418009489,795567664'  #1289279426(bogdandrienko), BladEugene 431390376, supernaturalmlady 418009489, Dossanov_Baizhan 795567664
+    async with aiohttp.ClientSession() as session:
+        for user in [str(x).strip() for x in users.split(',')]:
+            async with session.get(f'https://api.telegram.org/bot{bot_token}/sendMessage', params={'chat_id': user, 'text': beaty}) as response:
+                await response.json()  # пока форма грузится, можно жарить яйца
+            # try:
+            #     async with session.get(f'https://api.telegram.org/bot{bot_token}/sendMessage', params={'chat_id': user, 'text': beaty}) as response:
+            #         response = await response.json()
+            #         if response.status_code not in (200, 201):  # 200 - ok, 201 - created
+            #             raise Exception(response.status_code)
+            # except Exception as error:
+            #     print(error)
+            #     async with session.get(f'https://api.telegram.org/bot{bot_token}/sendMessage', params={'chat_id': user, 'text': beaty}) as response:
+            #         response = await response.json()
+            #         if response.status_code not in (200, 201):
+            #             async with aiofiles.open("logs.txt", 'a', encoding="utf-8") as f:
+            #                 await f.write(f"{datetime.datetime.now()} {error}")
 
-    # async with aiohttp.ClientSession() as session:
-    #     async with session.get("http://127.0.0.1:8003/api") as response:
-    #         data = await response.json()
-    # return {"data": data}
-
-    return templates.TemplateResponse("index.html", {"request": request})
+    return RedirectResponse(url="/")  # GET
