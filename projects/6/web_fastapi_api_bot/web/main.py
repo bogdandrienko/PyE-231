@@ -31,7 +31,7 @@ async def submit(request: Request):
     file = form_data["addition"]
     f = await file.read()  # пока форма грузится, можно жарить яйца
     # print(type(await file.read()), await file.read())
-    workbook: Workbook = openpyxl.load_workbook(filename=io.BytesIO(f), data_only=True)
+    workbook: Workbook = openpyxl.load_workbook(filename=io.BytesIO(f), data_only=True)  # xlsx, xls, xlsm
     worksheet: Worksheet = workbook.active
     data = tuple(worksheet.iter_rows(min_row=2, max_row=worksheet.max_row, min_col=1, max_col=worksheet.max_column, values_only=True))
     print(data)
@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS items (
 # INSERT INTO my_table (id, name, description, price, quantity)
 # VALUES ({data[0]}, 'Боты', 'Удобные боты', 70.5, 3)
 # ''')
-        it = clear_data[0]
+        it = clear_data[0]  # берётся только 1 элемент
         beaty = f"[{it[0]}] {it[1]} - {it[2][:30]} ... {it[3]}$ | {it[4]}"
         print(it)
         # INSERT OR REPLACE INTO items (id, name, description...)
@@ -96,5 +96,7 @@ VALUES (:id, :name, :description, :price, :quantity)
             #         if response.status_code not in (200, 201):
             #             async with aiofiles.open("logs.txt", 'a', encoding="utf-8") as f:
             #                 await f.write(f"{datetime.datetime.now()} {error}")
+    # import requests
+    # requests.get(proxies="http://proxy.server:3128")
 
     return RedirectResponse(url="/")  # GET

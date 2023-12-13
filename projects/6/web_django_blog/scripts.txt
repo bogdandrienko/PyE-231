@@ -1,0 +1,28 @@
+# виртуальное окружение
+python -m venv env
+
+# входит в env
+call env/scripts/activate
+
+# установить библиотеки
+pip install django pillow
+
+# создаём проект
+django-admin startproject django_settings .
+
+# создаём приложение
+django-admin startapp django_app
+django-admin startapp django_app2
+
+
+
+# выполняем миграции(изменения в БД)
+python manage.py makemigrations
+python manage.py migrate
+
+# создаём суперпользователя
+python manage.py createsuperuser
+
+# запускаем сервер
+python manage.py runserver 0.0.0.0:8000
+
