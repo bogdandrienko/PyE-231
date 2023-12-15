@@ -1,0 +1,21 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home page</title>
+    <link rel="stylesheet" href="{% static 'css/my_css.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap/bootstrap.css' %}">
+</head>
+<body>
+<h1>Home page</h1>
+<p id="text1" class="my_custom_color_blue">
+  Я цветная надпись
+</p>
+
+<button onclick="Dubl()">изменить текст</button>
+
+<script defer src="{% static 'js/my_js.js' %}"></script>
+</body>
+</html>

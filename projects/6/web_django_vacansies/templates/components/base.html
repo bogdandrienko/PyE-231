@@ -1,0 +1,22 @@
+{% load static %}
+
+<!--
+Jinja(django) / jinja2(fastapi/flask/sanic) -
+шаблонизатор, т.е. он позволяет выполнять логику(python-like)
+внутри HTML. (for, if-else, not, formatting...)
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Стандартное название страницы{% endblock title %}</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap/bootstrap.css' %}">
+</head>
+<body>
+{% include "components/navbar.html" %}
+{% block main %}No data!{% endblock main %}
+{% include "components/footer.html" %}
+<script defer src="{% static 'js/bootstrap/bootstrap.js' %}"></script>
+</body>
+</html>

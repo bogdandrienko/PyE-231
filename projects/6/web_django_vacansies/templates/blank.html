@@ -1,0 +1,25 @@
+{% extends "components/base.html" %}
+
+{% block title %}Домашняя{% endblock title %}
+
+{% block main %}
+
+{% if message %}
+    {% include 'components/success.html' %}
+{% else %}
+
+<form class="container m-3 p-3" method="POST" action="{% url 'blank' %}" enctype="multipart/form-data">
+  <!-- cross-site-requests token - токен, который говорит Django, что запрос пришёл от Django -->
+  {% csrf_token %}
+  <div class="row g-3">
+    <div class="col-sm-6">
+      <label for="fio" class="form-label">ФИО</label>
+      <input name="fio" type="text" class="form-control" id="fio" placeholder="Иванов Иван Иванович" value="" required="">
+    </div>
+  </div>
+  <hr class="my-4">
+  <button class="w-100 btn btn-primary btn-lg" type="submit">Отправить резюме</button>
+</form>
+{% endif %}
+
+{% endblock main %}
