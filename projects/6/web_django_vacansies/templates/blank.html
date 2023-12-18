@@ -8,7 +8,8 @@
     {% include 'components/success.html' %}
 {% else %}
 
-<form class="container m-3 p-3" method="POST" action="{% url 'blank' %}" enctype="multipart/form-data">
+<form class="container m-3 p-3" method="POST" action="{% url 'blank' %}"
+      enctype="multipart/form-data">
   <!-- cross-site-requests token - токен, который говорит Django, что запрос пришёл от Django -->
   {% csrf_token %}
   <div class="row g-3">

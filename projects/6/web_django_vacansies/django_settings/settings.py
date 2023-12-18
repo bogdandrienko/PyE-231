@@ -48,7 +48,7 @@ TEMPLATES = [
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         # массив, который отвечает за пути с html-файлами
         "DIRS": [
-            BASE_DIR/'templates',
+            BASE_DIR / "templates",
             # BASE_DIR/'frontend/public',  # react - js library
             # BASE_DIR/'frontend/build',  # vue - js framework
         ],
@@ -76,6 +76,55 @@ DATABASES = {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": BASE_DIR / "db.sqlite3",
     }
+}
+
+"""
+# postgresql
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',  # psycopg2
+        'NAME': 'dbname',
+        'USER': 'dbuser',
+        'PASSWORD': 'dbpassword',
+        'HOST': '127.0.0.1',  # localhost
+        'PORT': '5432',
+    }
+}
+"""
+
+CACHES = {
+    # Кэш в оперативной памяти
+    # + скорость
+    # - дорого, нельзя вынести на другой сервер
+    # TODO - ВЫСОКО ПРИОРИТЕТНЫЕ ДАННЫЕ (домашняя страница)
+    "default": {
+        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+    },
+    # Кэш в базе данных
+    # + дешево
+    # - средняя скорость, находится там же, где и основная база
+    # вычисления(computing) - у учеников есть много критериев, оценки, успеваемость... Клас.руку нужно час высчитывать лучшего ученика. Лучший - Нурдаулет.
+    # TODO - НИЗКО ПРИОРИТЕТНЫЕ ДАННЫЕ (страница с контактами)
+    "special": {
+        "BACKEND": "django.core.cache.backends.db.DatabaseCache",
+        "LOCATION": "cache_table",
+        "TIMEOUT": "120",
+        "OPTIONS": {
+            # "MAX_ENTIES": 200,
+        },
+    },
+    # Внешний кэш
+    # + масштабируемость
+    # - сложнее
+    # 'extra': {
+    #     'BACKEND': 'django_redis.cache.RedisCache',
+    #     'LOCATION': env("REDIS_LOCATION")',
+    #     'TIMEOUT': '240',
+    #     'OPTIONS': {
+    #         # "MAX_ENTIES": 200,
+    #         "PASSWORD": "12345qwertY!"
+    #     }
+    # }
 }
 
 

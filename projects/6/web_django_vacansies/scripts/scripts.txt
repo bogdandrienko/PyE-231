@@ -7,6 +7,9 @@ call env/scripts/activate
 # установить библиотеки
 pip install django pillow
 
+# Сохраняет библиотеки с их версиями из этого виртуального окружения
+pip freeze > requirements.txt
+
 # создаём проект
 django-admin startproject django_settings .
 
@@ -29,4 +32,3 @@ python manage.py createsuperuser
 
 # запускаем сервер
 python manage.py runserver 0.0.0.0:8000
-
