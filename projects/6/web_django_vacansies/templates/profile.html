@@ -1,0 +1,18 @@
+{% extends "components/base.html" %}
+
+{% block title %}Профиль человека{% endblock title %}
+
+{% block main %}
+
+<a href="{% url 'profiles' %}" class="btn btn-lg btn-outline-danger w-100">назад</a>
+
+<div class="card container bg-light m-0 p-0 text-center">
+    <div class="card-header m-0 p-1">{{ profile.name }}</div>
+    <div class="card-body m-0 p-1">{{ profile.exp }}</div>
+    <div class="card-footer m-0 p-1">{{ profile.iin }}</div>
+
+</div>
+
+<a href="{% url 'profile_delete' profile.id %}" class="btn btn-lg btn-outline-warning w-25">удалить</a>
+
+{% endblock main %}

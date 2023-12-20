@@ -1,0 +1,21 @@
+{% extends "components/base.html" %}
+
+{% block title %}Страница для списка пользователей{% endblock title %}
+
+{% block main %}
+
+<div class="card container bg-light">
+<ul>
+    {% for p in profiles %}
+        <li>
+            <div class="card">
+                <a href="{% url 'profile' p.id %}" class="btn btn-outline-primary w-25">{{ p.name }}</a>
+                 {{ p.iin }} [{{ p.exp }} лет]
+            </div>
+        </li>
+    {% endfor %}
+</ul>
+
+</div>
+
+{% endblock main %}

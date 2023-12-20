@@ -9,9 +9,12 @@ from django.contrib.auth.hashers import make_password
 from django.core.cache import caches
 from django.contrib.auth.models import User
 from django.http import JsonResponse, HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 import sqlite3
-from django_app import utils
+
+from django.urls import reverse
+from django.views.decorators.cache import cache_page
+from django_app import utils, models
 
 # наш собственный кэш
 cache: utils.CustomCache = utils.CustomCache()

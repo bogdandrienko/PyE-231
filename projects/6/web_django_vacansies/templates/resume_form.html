@@ -1,0 +1,20 @@
+{% extends "components/base.html" %}
+
+{% block title %}Форма для отправки{% endblock title %}
+
+{% block main %}
+
+<form class="border border-3 border-dark" method="POST" action="{% url 'save_form' %}" enctype="multipart/form-data">
+  {% csrf_token %}
+  <input type="text" name="name" required="">
+  <input type="number" name="iin" required="">
+    <select name="exp" required="">
+        <option selected value="">Выберите из списока</option>
+        <option value="0">без опыта</option>
+        <option value="3">от 3 лет</option>
+        <option value="5">от 5 лет</option>
+    </select>
+  <button type="submit">Отправить</button>
+</form>
+
+{% endblock main %}
