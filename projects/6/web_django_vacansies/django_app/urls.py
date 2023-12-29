@@ -14,7 +14,12 @@ urlpatterns = [
     path("blank", views.blank, name="blank"),
     # test
     path("test", views.test, name="test"),
-    # path("", views.home),
+    # todo new (ORM + Cache + Pagination)
+    # path("vacansie/list/", views.vacansie_list, name="vacansie_list"),
+    # path("vacansie/detail/<str:vac_id>/", views.home, name="test"),
+    # path("vacansie/create/", views.home, name="test"),
+    # path("vacansie/export/", views.home, name="test"),
+    # path("vacansie/import/", views.home, name="test"),
     # path("", views.home),
     # path("", views.home),
     # path("", views.home),

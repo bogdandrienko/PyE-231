@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django_app",
     "django_profiles",
+    "django_vacansie",
 ]
 
 MIDDLEWARE = [
@@ -95,38 +96,15 @@ DATABASES = {
 """
 
 CACHES = {
-    # Кэш в оперативной памяти
-    # + скорость
-    # - дорого, нельзя вынести на другой сервер
-    # TODO - ВЫСОКО ПРИОРИТЕТНЫЕ ДАННЫЕ (домашняя страница)
     "default": {
         "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
     },
-    # Кэш в базе данных
-    # + дешево
-    # - средняя скорость, находится там же, где и основная база
-    # вычисления(computing) - у учеников есть много критериев, оценки, успеваемость... Клас.руку нужно час высчитывать лучшего ученика. Лучший - Нурдаулет.
-    # TODO - НИЗКО ПРИОРИТЕТНЫЕ ДАННЫЕ (страница с контактами)
     "special": {
         "BACKEND": "django.core.cache.backends.db.DatabaseCache",
         "LOCATION": "cache_table",
         "TIMEOUT": "120",
-        "OPTIONS": {
-            # "MAX_ENTIES": 200,
-        },
+        "OPTIONS": {},
     },
-    # Внешний кэш
-    # + масштабируемость
-    # - сложнее
-    # 'extra': {
-    #     'BACKEND': 'django_redis.cache.RedisCache',
-    #     'LOCATION': env("REDIS_LOCATION")',
-    #     'TIMEOUT': '240',
-    #     'OPTIONS': {
-    #         # "MAX_ENTIES": 200,
-    #         "PASSWORD": "12345qwertY!"
-    #     }
-    # }
 }
 
 

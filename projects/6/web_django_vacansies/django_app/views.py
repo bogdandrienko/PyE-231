@@ -4,7 +4,6 @@ views - контроллеры(вью) - т.е. бизнес логика
 import json
 import random
 import time
-
 from django.contrib.auth.hashers import make_password
 from django.core.cache import caches
 from django.contrib.auth.models import User
@@ -15,6 +14,7 @@ import sqlite3
 from django.urls import reverse
 from django.views.decorators.cache import cache_page
 from django_app import utils, models
+from django_vacansie.models import Vacansie
 
 # наш собственный кэш
 cache: utils.CustomCache = utils.CustomCache()
@@ -184,3 +184,26 @@ INSERT INTO profile (iin, fio, experience)
 VALUES (:iin, :fio, :experience);""",
         _kwargs={"iin": iin, "fio": iin, "experience": iin},
     )  # TODO SQL SAFE
+
+
+# TODO NEW #############################################################################################
+
+
+@utils.decorator_time_measure
+def vacansie_list(request):
+    # fake
+    # vacs = [{"title": f"Вакансия №{x}"} for x in range(1, 100 + 1)]
+
+    # генерация набора данных в базе
+    # words = ["пекарь", "водитель", "программист"]
+    # for i in range(1, 30):
+    #     models.Vacansie.objects.create(title=f"{random.choice(words)} {i}", description="Описание вакансии", salary=100000 + i * 30, is_active=True)
+
+    # orm
+    # vacs = models.Vacansie.objects.all().filter(is_active=True)
+    vacs = utils.get_cache("vacansie_list", lambda: Vacansie.objects.all().filter(is_active=True), timeout=20)
+
+    # 0.0015
+    # 0.0005 -> 3x - 300%
+
+    return render(request, "vacansie/vacansie_list.html", context={"vacs": vacs})
