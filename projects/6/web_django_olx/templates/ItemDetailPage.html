@@ -1,0 +1,54 @@
+{% extends 'components/base.html' %}
+
+{% block main %}
+<div class="container">
+    <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-body-tertiary" style="width: 380px;">
+    <a href="/" class="d-flex align-items-center flex-shrink-0 p-3 link-body-emphasis text-decoration-none border-bottom">
+      <svg class="bi pe-none me-2" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
+      <span class="fs-5 fw-semibold">Детально о товаре:</span>
+    </a>
+    <div class="list-group list-group-flush border-bottom scrollarea">
+      <a href="#" class="list-group-item list-group-item-action py-3 lh-sm" aria-current="true">
+        <div class="d-flex w-100 align-items-center justify-content-between">
+          <strong class="mb-1">{{ item.title }}</strong>
+          <small class="text-danger">{{ item.price }} тг.</small>
+        </div>
+        <div class="col-10 mb-1 small">{{ item.description }} тг.</div>
+      </a>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="bg-light border border-3 border-danger">
+{% if request.user.is_authenticated %}
+    <form method="POST" action="{% url 'comment' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="d-flex w-100">
+            <input name="article" type="hidden" value="{{ item.id }}"/>
+            <textarea name="text" class="form-control"></textarea>
+            <button class="btn btn-primary btn-lg w-25" type="submit">отправить комментарий</button>
+        </div>
+    </form>
+    <hr/>
+{% endif %}
+<hr/>
+{% include 'components/paginator.html' %}
+<div class="bg-warning p-2">
+    <div class="container">
+        <ul>
+            {% for c in page_obj %}
+                <li>{{ c.author.username }}: {{ c.author.first_name }} {{ c.author.last_name }}
+
+                <p>{{ c.text }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% include 'components/paginator.html' %}
+</div>
+
+
+{% endblock main %}
