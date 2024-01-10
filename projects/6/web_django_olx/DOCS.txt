@@ -66,10 +66,39 @@ MODEL(optional) -> VIEW -> TEMPLATE(optional) -> URL ->
 
 * Категории (для фильтрации)
 
-
+* Улучшение дизайна
 * Лайки(система рейтинга)
-* расширить модель товара - картинка и др поля
-* Контекстный менеджер
-* Simple Tag bor filters
-* Чат с техподдержкой/продавцом
+1. Нужен рейтинг для товара(отрицательный/положительный)
+2. Рейтинг индивидуальный (если я поставил лайк, это не значит что-то другой поставил лайк)
 
+# ничего нет -> like -> ItemRating.objects.create(is_like=True)
+# ничего нет -> dislike -> ItemRating.objects.create(is_like=False)
+# is_like=True -> like -> ItemRating.objects.delete()
+# is_like=False -> dislike -> ItemRating.objects.delete()
+# is_like=True -> dislike -> is_like=False
+# is_like=False -> like -> is_like=True
+
+
+# navbar + footer - include(jinja)
+# base - extend(jinja)
+# custom filters and tags - templatetags(django_app_filters_and_tags.py)
+# search
+# item - Models.py
+# category item - ForeignKey(OneToMany)
+# tags item - ManyToMany
+# vip item - OneToOne
+# comment item - for item
+# rating item - like/dislike/nothing
+# list item -
+# detail item -
+
+* Контекстный менеджер
+* Изменяемая сортировка
+* расширить модель товара - картинка и др поля
+* create item -> moderate
+* hide(delete) item
+* change item
+* Чат с техподдержкой/продавцом
+# избранное
+# слежка за категорией (отправлять письмо, если появился товар в заданной категории)
+# Оплата(3D secure)

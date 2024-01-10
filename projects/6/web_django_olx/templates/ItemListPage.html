@@ -1,29 +1,31 @@
 {% extends 'components/base.html' %}
+{% load django_app_filters_and_tags %}
 
 {% block main %}
-<div class="container">
-    <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-body-tertiary" style="width: 380px;">
-    <a href="/" class="d-flex align-items-center flex-shrink-0 p-3 link-body-emphasis text-decoration-none border-bottom">
-      <svg class="bi pe-none me-2" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
-      <span class="fs-5 fw-semibold">Список товаров:</span>
-    </a>
-    <div class="list-group list-group-flush border-bottom scrollarea">
-        {% for item in items %}
-          <a href="#" class="list-group-item list-group-item-action py-3 lh-sm" aria-current="true">
-            <div class="d-flex w-100 align-items-center justify-content-between">
-              <strong class="mb-1">{{ item.title }}</strong>
-              <small class="text-danger">{{ item.price }} тг.</small>
-            </div>
-            <div class="col-10 mb-1 small">{{ item.description }} тг.</div>
-          </a>
-        {% empty %}
-        <a href="#" class="list-group-item list-group-item-action py-3 lh-sm" aria-current="true">
-            <div class="d-flex w-100 align-items-center justify-content-between">
-              <strong class="mb-1">Ни одного товара не найдено!</strong>
-            </div>
-          </a>
-        {% endfor %}
-    </div>
-  </div>
+
+<div class="pricing-header p-3 pb-md-4 mx-auto text-center">
+  <h1 class="display-4 fw-normal text-body-emphasis">Список товаров:</h1>
 </div>
+
+<div class="row row-cols-1 row-cols-md-5 mb-3 text-center">
+    {% for item in items %}
+      <div class="col">
+        <div class="card mb-4 rounded-3 shadow-sm">
+          <div class="card-header py-3">
+            <h4 class="my-0 fw-normal">{{ item.title }} ({% item_rating item.id %})</h4>
+          </div>
+          <div class="card-body">
+            <h1 class="card-title pricing-card-title">{% digit_beautify item.price %} тг.</h1>
+            <ul class="list-unstyled mt-3 mb-4">
+              <li>{{ item.description|custom_cut:50 }}</li>
+            </ul>
+            <a href="{% url 'item' item.id %}" type="button" class="w-100 btn btn-lg btn-outline-primary">Детали</a>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+    <div class="border border-1 border-danger">Ни одного товара не найдено!</div>
+    {% endfor %}
+</div>
+
 {% endblock main %}

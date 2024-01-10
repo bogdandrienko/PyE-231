@@ -9,6 +9,8 @@ urlpatterns = [
     path("category/<str:slug_name>/", views.items, name="items"),
     path("item/<str:item_id>/", views.item, name="item"),
     path("comment/", views.comment, name="comment"),
+    path("comment/<str:comment_id>/delete/<str:item_id>/", views.comment_delete, name="comment_delete"),
+    path("item/<str:item_id>/rating/<str:is_like>/", views.rating, name="rating"),
     #
     path("register/", views.register, name="register"),  # {% url 'register' %}
     path("login/", views.login_v, name="login"),

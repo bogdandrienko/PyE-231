@@ -1,38 +1,81 @@
 {% extends 'components/base.html' %}
+{% load django_app_filters_and_tags %}
 
 {% block main %}
-    Домашняя страница
 
-<div class="bg-success p-2">
-    <div class="container">
-        <form method="POST" action="{% url 'search' %}" enctype="multipart/form-data">
-            {% csrf_token %}
-            <div class="d-flex w-100">
-                <input name="search" type="text" class="form-control" placeholder="поиск..."/>
-                <button class="btn btn-primary btn-lg w-25" type="submit">искать</button>
-            </div>
-        </form>
-    </div>
+<div class="container my-5">
+    <form class="shadow p-3" method="POST" action="{% url 'search' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="w-75 input-group">
+            <input name="search" type="text" minlength="1" class="form-control form-control-lg" placeholder="поиск..." required=""/>
+            <button class="btn btn-primary btn-lg w-25" type="submit">искать</button>
+        </div>
+    </form>
 </div>
 
-<div class="bg-warning p-2">
-    <div class="container">
-        <ul>
-            {% for c in categories %}
-                <li><a href="{% url 'items' c.slug %}">{{ c.title }}</a></li>
-            {% endfor %}
-        </ul>
+
+<div class="container px-4 py-5" id="featured-3">
+    <h2 class="border-bottom">Категории товаров:</h2>
+    <div class="row g-4 row-cols-1 row-cols-lg-4">
+        {% for c in categories %}
+      <div class="feature col">
+        <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2">
+          <svg class="bi" width="1em" height="1em"><use xlink:href="#collection"></use></svg>
+        </div>
+        <h3 class="fs-2 text-body-emphasis">{{ c.title }} [{% category_count c.id %}]</h3>
+        <p>...</p>
+        <a href="{% url 'items' c.slug %}" class="icon-link">
+          детально
+          <svg class="bi"><use xlink:href="#chevron-right"></use></svg>
+        </a>
+      </div>
+        {% endfor %}
     </div>
+  </div>
+
+    <hr/>
+
+<div class="pricing-header p-3 pb-md-4 mx-auto text-center">
+  <h1 class="display-4 fw-normal text-body-emphasis">VIP-товары</h1>
+  <p class="fs-5 text-body-secondary">Самые лучшие в категориях:</p>
 </div>
 
-<div class="bg-dark p-2">
-    <div class="container">
-        <ul>
-            {% for v in vips %}
-                <li><a href="{% url 'item' v.article.id %}">{{ v.article.title }}</a></li>
-            {% endfor %}
-        </ul>
-    </div>
+<div class="row row-cols-1 row-cols-md-5 mb-3 text-center">
+    {% for v in vips %}
+      <div class="col">
+        <div class="card mb-4 rounded-3 shadow-sm">
+          <div class="card-header py-3">
+            <h4 class="my-0 fw-normal">{{ v.article.title }}</h4>
+          </div>
+          <div class="card-body">
+            <h1 class="card-title pricing-card-title">${{ v.article.price }}<small class="text-body-secondary fw-light">/mo</small></h1>
+            <ul class="list-unstyled mt-3 mb-4">
+              <li>{{ v.article.description|custom_cut:50 }}</li>
+            </ul>
+            <a href="{% url 'item' v.article.id %}" type="button" class="w-100 btn btn-lg btn-outline-primary">Детали</a>
+          </div>
+        </div>
+      </div>
+{% endfor %}
 </div>
+
+
+    <hr/>
+
+<div class="container col-xxl-8 px-4 py-5">
+    <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+      <div class="col-10 col-sm-8 col-lg-6">
+        <img src="https://getbootstrap.com/docs/5.3/examples/heroes/bootstrap-themes.png" class="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" width="700" height="500" loading="lazy">
+      </div>
+      <div class="col-lg-6">
+        <h1 class="display-5 fw-bold text-body-emphasis lh-1 mb-3">Responsive left-aligned hero with image</h1>
+        <p class="lead">Quickly design and customize responsive mobile-first sites with Bootstrap, the world’s most popular front-end open source toolkit, featuring Sass variables and mixins, responsive grid system, extensive prebuilt components, and powerful JavaScript plugins.</p>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+          <button type="button" class="btn btn-primary btn-lg px-4 me-md-2">Primary</button>
+          <button type="button" class="btn btn-outline-secondary btn-lg px-4">Default</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 {% endblock main %}

@@ -1,33 +1,63 @@
 {% extends 'components/base.html' %}
+{% load django_app_filters_and_tags %}
 
 {% block main %}
-<div class="container">
-    <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-body-tertiary" style="width: 380px;">
-    <a href="/" class="d-flex align-items-center flex-shrink-0 p-3 link-body-emphasis text-decoration-none border-bottom">
-      <svg class="bi pe-none me-2" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
-      <span class="fs-5 fw-semibold">Детально о товаре:</span>
-    </a>
-    <div class="list-group list-group-flush border-bottom scrollarea">
-      <a href="#" class="list-group-item list-group-item-action py-3 lh-sm" aria-current="true">
-        <div class="d-flex w-100 align-items-center justify-content-between">
-          <strong class="mb-1">{{ item.title }}</strong>
-          <small class="text-danger">{{ item.price }} тг.</small>
+
+<div class="pricing-header p-3 pb-md-4 mx-auto text-center">
+  <h1 class="display-4 fw-normal text-body-emphasis">Детально о товаре:</h1>
+</div>
+
+<div class="row row-cols-1 row-cols-md-1 mb-3 text-center">
+      <div class="col">
+        <div class="card mb-4 rounded-3 shadow-sm">
+          <div class="card-header py-3">
+          <div class="d-flex">
+            <h4 class="my-0 fw-normal w-75">{{ item.title }}</h4>
+
+              <div class="p-3 d-flex shadow">
+{% if is_my_rating == 1 %}
+    <a href="{% url 'rating' item.id '1' %}"><i class="fa-solid fa-thumbs-up text-success m-1 p-3"></i></a>
+{% else %}
+    <a href="{% url 'rating' item.id '1' %}"><i class="fa-regular fa-thumbs-up text-success m-1 p-3"></i></a>
+{% endif %}
+{% if total_rating_value > 0 %}
+    <div class="display-6 text-success m-1 p-1">{{ total_rating_value }}</div>
+{% else %}
+    {% if total_rating_value == 0 %}
+        <div class="display-6 text-secondary m-1 p-1">{{ total_rating_value }}</div>
+    {% else %}
+        <div class="display-6 text-danger m-1 p-1">{{ total_rating_value }}</div>
+    {% endif %}
+{% endif %}
+{% if is_my_rating == -1 %}
+    <a href="{% url 'rating' item.id '-1' %}"><i class="fa-solid fa-thumbs-down text-danger m-1 p-3"></i></a>
+{% else %}
+    <a href="{% url 'rating' item.id '-1' %}"><i class="fa-regular fa-thumbs-down text-danger m-1 p-3"></i></a>
+{% endif %}
+</div>
+</div>
+          </div>
+          <div class="card-body">
+            <h1 class="card-title pricing-card-title">{% digit_beautify item.price %} тг.</h1>
+            <ul class="list-unstyled mt-3 mb-4">
+              <li>{{ item.description }}</li>
+            </ul>
+          </div>
         </div>
-        <div class="col-10 mb-1 small">{{ item.description }} тг.</div>
-      </a>
-    </div>
-  </div>
+      </div>
 </div>
 
 
 
-<div class="bg-light border border-3 border-danger">
+
+
+<div class="">
 {% if request.user.is_authenticated %}
     <form method="POST" action="{% url 'comment' %}" enctype="multipart/form-data">
         {% csrf_token %}
-        <div class="d-flex w-100">
+        <div class="d-flex w-100 input-group p-3">
             <input name="article" type="hidden" value="{{ item.id }}"/>
-            <textarea name="text" class="form-control"></textarea>
+            <textarea name="text" class="form-control" rows="2"></textarea>
             <button class="btn btn-primary btn-lg w-25" type="submit">отправить комментарий</button>
         </div>
     </form>
@@ -35,13 +65,19 @@
 {% endif %}
 <hr/>
 {% include 'components/paginator.html' %}
-<div class="bg-warning p-2">
+<div class="p-2 shadow">
     <div class="container">
         <ul>
             {% for c in page_obj %}
                 <li>{{ c.author.username }}: {{ c.author.first_name }} {{ c.author.last_name }}
 
+                {% check_is_my_comment c.id as is_my_comment %}
+                {% if is_my_comment %}
+                    <a href="{% url 'comment_delete' c.id item.id %}"><i class="fa-solid fa-hammer text-danger"></i></a>
+                {% endif %}
+
                 <p>{{ c.text }}</p>
+                <hr/>
                 </li>
             {% endfor %}
         </ul>

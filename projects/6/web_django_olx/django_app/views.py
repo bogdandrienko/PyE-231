@@ -36,19 +36,34 @@ def category(request):
 
 def items(request, slug_name: str):
     cat = models.CategoryItem.objects.get(slug=slug_name)
+    # items = отдельные сущности
     _items = models.Item.objects.all().filter(is_active=True, category=cat)
+
     return render(request, "ItemListPage.html", context={"items": _items})
 
 
 def item(request, item_id: str):
     _item = models.Item.objects.get(id=int(item_id))
-    _comments = models.CommentItem.objects.all().filter(is_active=True)
+    _comments = models.CommentItem.objects.all().filter(is_active=True, article=_item)
+    _ratings = models.ItemRating.objects.all().filter(item=_item)
+    _total_rating_value = _ratings.filter(is_like=True).count() - _ratings.filter(is_like=False).count()
+
+    # пытаюсь найти "свою" отметку лайка, приходит пустой массив, если моей отметки нет
+    _my_rating = _ratings.filter(author=request.user)
+    if len(_my_rating) > 0:
+        _is_my_rating = 1 if _my_rating[0].is_like else -1
+    else:
+        _is_my_rating = 0
 
     selected_page = request.GET.get(key="page", default=1)
     page_objs = Paginator(object_list=_comments, per_page=4)
     page_obj = page_objs.page(number=selected_page)
 
-    return render(request, "ItemDetailPage.html", context={"item": _item, "page_obj": page_obj})
+    return render(
+        request,
+        "ItemDetailPage.html",
+        context={"item": _item, "page_obj": page_obj, "total_rating_value": _total_rating_value, "is_my_rating": _is_my_rating},
+    )
 
 
 def comment(request):
@@ -58,6 +73,45 @@ def comment(request):
         _item = models.Item.objects.get(id=int(article_id))
         models.CommentItem.objects.create(author=request.user, article=_item, text=text)
         return redirect(reverse("item", args=(article_id,)))
+
+
+def comment_delete(request, comment_id: str, item_id: str):
+    models.CommentItem.objects.get(id=int(comment_id)).delete()
+    return redirect(reverse("item", args=(item_id,)))
+
+
+def rating(request, item_id: str, is_like: str):
+    author = request.user
+    _item = models.Item.objects.get(id=int(item_id))
+    _is_like = True if is_like == "1" else False
+
+    """
+# ничего нет -> like -> ItemRating.objects.create(is_like=True)
+# ничего нет -> dislike -> ItemRating.objects.create(is_like=False)
+# is_like=True -> like -> ItemRating.objects.delete()
+# is_like=False -> dislike -> ItemRating.objects.delete()
+# is_like=True -> dislike -> is_like=False
+# is_like=False -> like -> is_like=True
+    """
+
+    try:
+        # пытаюсь взять от этого пользователя к этому товару лайк или дизайн, если нет - ошибка
+        like_obj = models.ItemRating.objects.get(author=author, item=_item)
+        # если я раньше поставил лайк и сейчас снова жму лайк, то удалить запись
+        if like_obj.is_like and _is_like:
+            like_obj.delete()
+        # если я раньше поставил дизлайк и сейчас снова жму дизлайк, то удалить запись
+        elif not like_obj.is_like and not _is_like:
+            like_obj.delete()
+        # если я раньше поставил не тоже, что и сейчас, то обновляю запись
+        else:
+            like_obj.is_like = _is_like
+            like_obj.save()
+    except Exception as _:
+        # создаю запись, если такой записи нет
+        like_obj = models.ItemRating.objects.create(author=author, item=_item, is_like=_is_like)
+
+    return redirect(reverse("item", args=(item_id,)))
 
 
 def register(request):
