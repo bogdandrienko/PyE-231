@@ -12,7 +12,7 @@
       <div class="col">
         <div class="card mb-4 rounded-3 shadow-sm">
           <div class="card-header py-3">
-            <h4 class="my-0 fw-normal">{{ item.title }} ({% item_rating item.id %})</h4>
+            <h4 class="my-0 fw-normal">{{ item.title }} <i class="fa-solid fa-comment">{{ item.comment_count }}</i> ({% item_rating item.id %})</h4>
           </div>
           <div class="card-body">
             <h1 class="card-title pricing-card-title">{% digit_beautify item.price %} тг.</h1>

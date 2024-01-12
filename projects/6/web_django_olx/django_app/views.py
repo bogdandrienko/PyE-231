@@ -43,27 +43,43 @@ def items(request, slug_name: str):
 
 
 def item(request, item_id: str):
-    _item = models.Item.objects.get(id=int(item_id))
-    _comments = models.CommentItem.objects.all().filter(is_active=True, article=_item)
-    _ratings = models.ItemRating.objects.all().filter(item=_item)
-    _total_rating_value = _ratings.filter(is_like=True).count() - _ratings.filter(is_like=False).count()
+    """
+    Плюсы логики во View - единственная ответственность.
+    """
 
-    # пытаюсь найти "свою" отметку лайка, приходит пустой массив, если моей отметки нет
-    _my_rating = _ratings.filter(author=request.user)
-    if len(_my_rating) > 0:
-        _is_my_rating = 1 if _my_rating[0].is_like else -1
-    else:
-        _is_my_rating = 0
+    _item = models.Item.objects.get(id=int(item_id))
+    _comments = _item.get_all_comments()
+    _bugs_count = models.ItemBug.objects.filter(item=_item).count()
 
     selected_page = request.GET.get(key="page", default=1)
     page_objs = Paginator(object_list=_comments, per_page=4)
     page_obj = page_objs.page(number=selected_page)
 
+    context = {
+        "item": _item,
+        "page_obj": page_obj,
+        "total_rating_value": _item.total_rating(),
+        "is_my_rating": _item.is_my_rating_selection(user=request.user),
+        "v_bugs_count": _bugs_count,
+    }
+
     return render(
         request,
         "ItemDetailPage.html",
-        context={"item": _item, "page_obj": page_obj, "total_rating_value": _total_rating_value, "is_my_rating": _is_my_rating},
+        context=context,
     )
+
+
+def bug(request, item_id: str):
+    _item = models.Item.objects.get(id=int(item_id))
+    _author = request.user  # django auth
+
+    try:
+        models.ItemBug.objects.get(author=_author, item=_item)
+    except Exception as _:
+        models.ItemBug.objects.create(author=_author, item=_item)
+
+    return redirect(reverse("item", args=(item_id,)))
 
 
 def comment(request):
@@ -163,3 +179,12 @@ def login_v(request):
 def logout_v(request):
     logout(request)
     return redirect(reverse("login"))
+
+
+def test(request):
+    """
+    context_processors - контекстный процессор -
+    функции, которые вызываются КАЖДЫЙ ВЫЗОВ render(...)
+    """
+
+    return render(request, "TestPage.html")

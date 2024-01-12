@@ -1,0 +1,1 @@
+/test/: admin/test/: admin/item/1/: admin

@@ -22,7 +22,7 @@
         <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2">
           <svg class="bi" width="1em" height="1em"><use xlink:href="#collection"></use></svg>
         </div>
-        <h3 class="fs-2 text-body-emphasis">{{ c.title }} [{% category_count c.id %}]</h3>
+        <h3 class="fs-2 text-body-emphasis">{{ c.title }} [{{ c.count }}]</h3>
         <p>...</p>
         <a href="{% url 'items' c.slug %}" class="icon-link">
           детально

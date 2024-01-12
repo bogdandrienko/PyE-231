@@ -36,6 +36,16 @@ class CategoryItem(models.Model):
     def __str__(self):
         return f"<CategoryItem {self.title}({self.id}) = {self.slug} />"
 
+    def count(self) -> int:
+        """Этот метод возвращает количество товаров в своей категории"""
+
+        # MVT - Model(сырые данные - чаще всего) - View(логика) - Template(внешний вид - только форматирование)
+        # Паттерн - для адекватного разделения ответственности.
+        # SOLID -
+        _category = CategoryItem.objects.get(id=int(self.id))
+        _items = Item.objects.filter(is_active=True, category=_category)
+        return _items.count()
+
 
 class TagItem(models.Model):  # товар дня, распродажа, на доставке...
     title = models.CharField(
@@ -147,6 +157,33 @@ class Item(models.Model):
         else:
             act = "продано"
         return f"<Item {self.title}({self.id}) | {act} | {self.description[:30]} />"
+
+    def comment_count(self) -> int:
+        _article = Item.objects.get(id=self.id)
+        _comments = CommentItem.objects.all().filter(article=_article, is_active=True)
+        return _comments.count()
+
+    def total_rating(self) -> int:
+        _item = Item.objects.get(id=self.id)
+        _ratings = ItemRating.objects.all().filter(item=_item)
+        return _ratings.filter(is_like=True).count() - _ratings.filter(is_like=False).count()
+
+    def is_my_rating_selection(self, user: User) -> int:
+        _item = Item.objects.get(id=self.id)
+        _ratings = ItemRating.objects.all().filter(item=_item)
+        # пытаюсь найти "свою" отметку лайка, приходит пустой массив, если моей отметки нет
+        _my_rating = _ratings.filter(author=user)
+        if len(_my_rating) > 0:
+            return 1 if _my_rating[0].is_like else -1
+        else:
+            return 0
+
+    def get_all_comments(self):
+        return CommentItem.objects.all().filter(is_active=True, article=self)
+
+    def m_bugs_count(self) -> int:
+        _bugs = ItemBug.objects.filter(item=self)
+        return _bugs.count()
 
 
 class Vip(models.Model):
@@ -304,3 +341,39 @@ class ItemRating(models.Model):
 
     def __str__(self):
         return f"<ItemRating {self.item.title}({self.id}) | {self.is_like}/>"
+
+
+class ItemBug(models.Model):
+    author = models.ForeignKey(
+        verbose_name="Автор",
+        db_index=True,
+        primary_key=False,
+        editable=True,
+        blank=True,
+        null=False,
+        default="",
+        max_length=100,
+        #
+        to=User,
+        on_delete=models.CASCADE,
+    )
+    item = models.ForeignKey(
+        verbose_name="Товар",
+        db_index=True,
+        primary_key=False,
+        editable=True,
+        blank=True,
+        null=False,
+        default="",
+        max_length=100,
+        #
+        to=Item,
+        on_delete=models.CASCADE,
+    )
+
+    class Meta:
+        app_label = "django_app"
+        ordering = ("-item", "-author")
+
+    def __str__(self):
+        return f"<ItemBug {self.item.title}({self.id})/>"

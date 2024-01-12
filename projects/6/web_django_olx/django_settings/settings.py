@@ -40,7 +40,13 @@ INSTALLED_APPS = [
     "django_app",
 ]
 
+"""MIDDLEWARE - промежуточный слой, в виде ООП.
+Выполняется в КАЖДОМ запросе.
+
+Тут помещают только обработчики request. Возможно логи.
+"""
 MIDDLEWARE = [
+    "django_app.middleware.CustomCorsMiddleware",  # CUSTOM
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -59,10 +65,11 @@ TEMPLATES = [
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
-                "django.template.context_processors.debug",
-                "django.template.context_processors.request",
-                "django.contrib.auth.context_processors.auth",
-                "django.contrib.messages.context_processors.messages",
+                "django.template.context_processors.debug",  # пробрасывает ошибки в HTMl
+                "django.template.context_processors.request",  # пробрасывает данные в HTMl
+                "django.contrib.auth.context_processors.auth",  # пробрасывает авторизацию в HTMl
+                "django.contrib.messages.context_processors.messages",  # пробрасывает всплывающие сообщения
+                "django_app.context_processors.get_user_count",  # CUSTOM
             ],
         },
     },

@@ -46,7 +46,6 @@ def digit_beautify(value: float):
 @register.simple_tag(takes_context=True)
 def item_rating(context: dict, item_id: str) -> int:  # simple_tag - сложная логика, вызываемая в django Jinja - шаблонизаторе
     # request: HttpRequest = context["request"]
-
     _item = models.Item.objects.get(id=int(item_id))
     _ratings = models.ItemRating.objects.all().filter(item=_item)
     return _ratings.filter(is_like=True).count() - _ratings.filter(is_like=False).count()
@@ -82,7 +81,8 @@ def check_user_access(context: str, groups: str = "") -> bool:
 
 
 @register.simple_tag(takes_context=True)
-def category_count(context: dict, category_id: str) -> int:
-    _category = models.CategoryItem.objects.get(id=int(category_id))
-    _items = models.Item.objects.filter(is_active=True, category=_category)
-    return _items.count()
+def t_bugs_count(context: dict, item_id: str) -> int:
+    # request: HttpRequest = context["request"]
+    _item = models.Item.objects.get(id=int(item_id))
+    _bugs = models.ItemBug.objects.filter(item=_item)
+    return _bugs.count()
