@@ -1,5 +1,6 @@
 {% extends 'components/base.html' %}
 {% load django_app_filters_and_tags %}
+{% load static %}
 
 {% block main %}
 
@@ -44,6 +45,20 @@
             <ul class="list-unstyled mt-3 mb-4">
               <li>{{ item.description }}</li>
             </ul>
+
+            <div>
+                {% if item.avatar %}
+                <img src="{% static item.avatar.url %}"
+                     alt="{{ item.title }}" width="500" class="img-fluid img-thumbnail"/>
+                {% endif %}
+
+            </div>
+          <div>
+                {% if item.file %}
+                <a href="{% static item.file.url %}" type="button" class="w-50 btn btn-lg btn-outline-dark">скачать инструкцию</a>
+                {% endif %}
+          </div>
+
           </div>
         </div>
       </div>

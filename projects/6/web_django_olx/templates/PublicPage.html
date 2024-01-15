@@ -1,0 +1,43 @@
+{% extends 'components/base.html' %}
+
+{% block main %}
+
+<form method="POST" action="{% url 'public' %}" enctype="multipart/form-data" class="container mx-5">
+    {% csrf_token %}
+    <div class="col-sm-4">
+      <label for="title" class="form-label">Наименование</label>
+      <input name="title" type="text" class="form-control" id="title" required="">
+    </div>
+    <div class="col-sm-4">
+      <label for="description" class="form-label">Описание</label>
+        <textarea name="description" class="form-control" rows="3" id="description" required=""></textarea>
+    </div>
+    <div class="col-sm-4">
+      <label for="price" class="form-label">Цена</label>
+      <input name="price" type="number" value="0" class="form-control" id="price" required="">
+    </div>
+    <div class="col-sm-4">
+      <label for="category" class="form-label">Категория</label>
+        <select name="category" class="form-select" id="category" required="">
+            <option value="">выберите категорию из списка</option>
+            {% for c in categories %}
+                <option value="{{ c.slug }}">{{ c.title }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="col-sm-4">
+      <label for="avatar" class="form-label">Аватар</label>
+      <input name="avatar" type="file" accept=".jpg,.png" class="form-control" id="avatar">
+    </div>
+
+    <div class="col-sm-4">
+      <label for="file" class="form-label">Инструкция</label>
+      <input name="file" type="file" accept=".docx,.pdf,.xlsx,.xls" class="form-control" id="file">
+    </div>
+
+    <hr class="m-3"/>
+    <button type="submit" class="btn btn-primary btn-lg w-100">Создать аккаунт</button>
+</form>
+
+{% endblock main %}

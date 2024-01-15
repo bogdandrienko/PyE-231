@@ -5,9 +5,12 @@
     <span class="fs-4">OLX 3.0 <sup>активные пользователи: {{ user_count }}</sup></span>
   </a>
 
+    <a href="/static/Dataset.xlsx" type="button" class="w-25 btn btn-lg btn-light">скачать набор данных</a>
+
   <ul class="nav nav-pills">
     <li class="nav-item"><a href="{% url 'home' %}" class="nav-link active" aria-current="page">Домашняя</a></li>
-    <li class="nav-item"><a href="#" class="nav-link">Чат</a></li>
+    <li class="nav-item"><a href="{% url 'public' %}" class="nav-link">Опубликовать объявление</a></li>
+    <li class="nav-item"><a href="{% url 'chat' %}" class="nav-link">Чат</a></li>
     <li class="nav-item"><a href="#" class="nav-link">Цены</a></li>
     <li class="nav-item"><a href="#" class="nav-link">Контакты</a></li>
   </ul>

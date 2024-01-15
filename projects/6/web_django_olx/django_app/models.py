@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.core.validators import FileExtensionValidator
 from django.db import models
 from django.utils import timezone
 
@@ -139,6 +140,28 @@ class Item(models.Model):
         #
         to=TagItem,
     )
+
+    avatar = models.ImageField(
+        verbose_name="Аватарка",
+        validators=[FileExtensionValidator(["jpg", "png", "jpeg", "bmp"])],
+        unique=False,
+        editable=True,
+        blank=True,
+        null=True,
+        default=None,
+        upload_to="item/avatars",
+    )
+    file = models.FileField(
+        verbose_name="Инструкция",
+        validators=[FileExtensionValidator(["xlsx", "docx", "pdf"])],
+        unique=False,
+        editable=True,
+        blank=True,
+        null=True,
+        default=None,
+        upload_to="item/files",
+    )
+
     is_active = models.BooleanField(
         verbose_name="Активеность объявления",
         null=False,
@@ -377,3 +400,92 @@ class ItemBug(models.Model):
 
     def __str__(self):
         return f"<ItemBug {self.item.title}({self.id})/>"
+
+
+class Room(models.Model):
+    name = models.CharField(
+        verbose_name="Наименование",
+        db_index=True,
+        primary_key=False,
+        unique=False,
+        editable=True,
+        blank=True,
+        null=False,
+        default="",
+        max_length=255,
+    )
+    slug = models.SlugField(
+        verbose_name="Ссылка",
+        db_index=True,
+        primary_key=False,
+        unique=True,
+        editable=True,
+        blank=True,
+        null=False,
+        default="",
+        max_length=300,
+    )
+
+    class Meta:
+        app_label = "django_app"
+        ordering = ("-slug", "-name")
+
+    def __str__(self):
+        return f"<Room {self.name} {self.slug} ({self.id})/>"
+
+
+class Message(models.Model):
+    user = models.ForeignKey(
+        verbose_name="Автор",
+        db_index=True,
+        primary_key=False,
+        editable=True,
+        blank=True,
+        null=False,
+        default="",
+        max_length=100,
+        #
+        to=User,
+        on_delete=models.CASCADE,
+    )
+    room = models.ForeignKey(
+        verbose_name="Комната",
+        db_index=True,
+        primary_key=False,
+        editable=True,
+        blank=True,
+        null=False,
+        default="",
+        max_length=100,
+        #
+        to=Room,
+        on_delete=models.CASCADE,
+    )
+    content = models.TextField(
+        verbose_name="Текст сообщения",
+        db_index=False,
+        primary_key=False,
+        unique=False,
+        editable=True,
+        blank=True,
+        null=False,
+        default="",
+    )
+    date_added = models.DateTimeField(
+        verbose_name="дата и время добавления",
+        db_index=True,
+        primary_key=False,
+        unique=False,
+        editable=True,
+        blank=True,
+        null=False,
+        default=timezone.now,
+        max_length=300,
+    )
+
+    class Meta:
+        app_label = "django_app"
+        ordering = ("-date_added", "-room")
+
+    def __str__(self):
+        return f"<Message {self.room.name} {self.user.username} {self.content[:30]} ({self.id})/>"

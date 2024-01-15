@@ -1,4 +1,5 @@
 {% extends 'components/base.html' %}
+{% load static %}
 {% load django_app_filters_and_tags %}
 
 {% block main %}
@@ -12,6 +13,9 @@
       <div class="col">
         <div class="card mb-4 rounded-3 shadow-sm">
           <div class="card-header py-3">
+            <a href="{% url 'item_hide' item.id %}" type="button"
+               class="fa-solid fa-trash text-decoration-none text-danger"></a>
+
             <h4 class="my-0 fw-normal">{{ item.title }} <i class="fa-solid fa-comment">{{ item.comment_count }}</i> ({% item_rating item.id %})</h4>
           </div>
           <div class="card-body">
@@ -19,6 +23,19 @@
             <ul class="list-unstyled mt-3 mb-4">
               <li>{{ item.description|custom_cut:50 }}</li>
             </ul>
+            <div>
+                {% if item.avatar %}
+                <img src="{% static item.avatar.url %}"
+                     alt="{{ item.title }}" class="img-fluid img-thumbnail"/>
+                {% endif %}
+
+                {% if item.file %}
+                <a href="{% static item.file.url %}" type="button" class="w-50 btn btn-lg btn-outline-dark">скачать инструкцию</a>
+                {% endif %}
+            </div>
+
+
+
             <a href="{% url 'item' item.id %}" type="button" class="w-100 btn btn-lg btn-outline-primary">Детали</a>
           </div>
         </div>

@@ -12,6 +12,8 @@ from django_app import models
 
 
 def home(request):
+    # print(request.META)
+
     categories = models.CategoryItem.objects.all()
     vips = models.Vip.objects.all().filter(expired__gt=datetime.datetime.now()).order_by("priority", "-article")
     return render(request, "HomePage.html", {"categories": categories, "vips": vips})
@@ -130,6 +132,34 @@ def rating(request, item_id: str, is_like: str):
     return redirect(reverse("item", args=(item_id,)))
 
 
+def public(request):
+    if request.method == "GET":
+        _categories = models.CategoryItem.objects.all()
+        return render(request, "PublicPage.html", context={"categories": _categories})
+    elif request.method == "POST":
+        title = str(request.POST["title"])
+        description = str(request.POST["description"])
+        price = int(request.POST["price"])
+        _category = models.CategoryItem.objects.get(slug=str(request.POST["category"]))
+
+        avatar = request.FILES.get("avatar", None)  # UploadInMemoryFile
+        file = request.FILES.get("file", None)
+
+        _item = models.Item.objects.create(
+            title=title, description=description, price=price, category=_category, avatar=avatar, file=file, is_active=False
+        )
+
+        return redirect(reverse("category"))
+
+
+def item_hide(request, item_id: str):
+    _item = models.Item.objects.get(id=int(item_id))
+    _item.is_active = False
+    _item.save()
+    # отправить уведомление или письмо модератору
+    return redirect(reverse("category"))
+
+
 def register(request):
     if request.method == "GET":
         return render(request, "RegisterPage.html")
@@ -188,3 +218,15 @@ def test(request):
     """
 
     return render(request, "TestPage.html")
+
+
+def chat(request):
+    _rooms = models.Room.objects.all()[::-1]
+    return render(request, "ChatPage.html", context={"rooms": _rooms})
+
+
+@login_required
+def room(request, room_slug: str):
+    _room = models.Room.objects.get(slug=room_slug)
+    _messages = models.Message.objects.filter(room=_room)[:30][::-1]
+    return render(request, "RoomPage.html", context={"room": _room, "messages": _messages})

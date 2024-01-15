@@ -11,6 +11,8 @@ urlpatterns = [
     path("bug/<str:item_id>/", views.bug, name="bug"),
     path("comment/", views.comment, name="comment"),
     path("comment/<str:comment_id>/delete/<str:item_id>/", views.comment_delete, name="comment_delete"),
+    path("public/item/", views.public, name="public"),
+    path("item/hide/<str:item_id>/", views.item_hide, name="item_hide"),
     path("item/<str:item_id>/rating/<str:is_like>/", views.rating, name="rating"),
     #
     path("register/", views.register, name="register"),  # {% url 'register' %}
@@ -18,4 +20,11 @@ urlpatterns = [
     path("logout/", views.logout_v, name="logout"),
     #
     path("test/", views.test, name="test"),
+    # chat
+    path("chat/", views.chat, name="chat"),
+    path("chat/<slug:room_slug>/", views.room, name="room"),
 ]
+
+from django_app import views_a
+
+websocket_urlpatterns = [path("ws/chat/<slug:room_name>/", views_a.ChatConsumer.as_asgi())]

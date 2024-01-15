@@ -31,6 +31,9 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
+    "daphne",
+    "channels",
+    #
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -76,6 +79,9 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "django_settings.wsgi.application"
+ASGI_APPLICATION = "django_settings.asgi.application"
+
+CHANNEL_LAYERS = {"default": {"BACKEND": "channels.layers.InMemoryChannelLayer"}}
 
 
 # Database
@@ -123,7 +129,22 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = "static/"
+"""
+Django в режиме DEBUG сам "обслуживает" статику - сам её выдаёт браузеру.
+В режиме PRODUCTION - статику "браузеру" будет отдавать Nginx.
+"""
+
+STATIC_URL = "/static/"
+STATIC_ROOT = Path(BASE_DIR / "staticroot")  # центральная папка для сбора статики
+STATICFILES_DIRS = [  # массив, с папками, откуда Django "собирает" статику
+    Path(BASE_DIR / "static"),
+    # Path(BASE_DIR / "react/build/static"),
+    # Path(BASE_DIR / "static")
+]
+
+# TODO UPLOAD
+MEDIA_URL = "/media/"  # /static/media/
+MEDIA_ROOT = Path(BASE_DIR / "static/media")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
