@@ -13,11 +13,18 @@
       <div class="col">
         <div class="card mb-4 rounded-3 shadow-sm">
           <div class="card-header py-3">
+
+              {% if request.user.username == item.author.username %}
             <a href="{% url 'item_hide' item.id %}" type="button"
                class="fa-solid fa-trash text-decoration-none text-danger"></a>
 
+            <a href="{% url 'update_item' item.id %}" type="button"
+               class="fa-solid fa-screwdriver text-decoration-none text-warning"></a>
+              {% endif %}
+
             <h4 class="my-0 fw-normal">{{ item.title }} <i class="fa-solid fa-comment">{{ item.comment_count }}</i> ({% item_rating item.id %})</h4>
           </div>
+
           <div class="card-body">
             <h1 class="card-title pricing-card-title">{% digit_beautify item.price %} тг.</h1>
             <ul class="list-unstyled mt-3 mb-4">

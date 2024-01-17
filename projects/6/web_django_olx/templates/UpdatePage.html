@@ -1,0 +1,64 @@
+{% extends 'components/base.html' %}
+{% load static %}
+
+{% block main %}
+
+<form method="POST" action="{% url 'update_item' item.id %}" enctype="multipart/form-data" class="container mx-5">
+    {% csrf_token %}
+    <div class="col-sm-4">
+      <label for="title" class="form-label">Наименование</label>
+      <input name="title" type="text" value="{{ item.title }}" class="form-control" id="title" required="">
+    </div>
+    <div class="col-sm-4">
+      <label for="description" class="form-label">Описание</label>
+        <textarea name="description" class="form-control" rows="3" id="description" required="">{{ item.description }}</textarea>
+    </div>
+    <div class="col-sm-4">
+      <label for="price" class="form-label">Цена</label>
+      <input name="price" type="number" value="{{ item.price }}" class="form-control" id="price" required="">
+    </div>
+    <div class="col-sm-4">
+      <label for="category" class="form-label">Категория</label>
+        <select name="category" class="form-select" id="category" required="">
+            <option value="{{ item.category.slug }}">{{ item.category.title }}(не изменять)</option>
+            {% for c in categories %}
+                <option value="{{ c.slug }}">{{ c.title }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="col-sm-4">
+    {% if item.avatar %}
+    <img src="{% static item.avatar.url %}"
+         alt="{{ item.title }}" class="img-fluid img-thumbnail"/>
+    {% endif %}
+
+      <label for="avatar" class="form-label">Аватар</label>
+      <input name="avatar" type="file" accept=".jpg,.png" class="form-control" id="avatar">
+    </div>
+
+    {% if item.avatar %}
+    <div class="col-sm-4">
+
+    <div class="form-check form-switch">
+      <input name="clear_avatar" class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+      <label class="form-check-label" for="flexSwitchCheckDefault">Очистить аватар</label>
+    </div>
+    </div>
+
+
+    {% endif %}
+
+    <div class="col-sm-4">
+        {% if item.file %}
+        <a href="{% static item.file.url %}" type="button" class="w-50 btn btn-lg btn-outline-dark">скачать инструкцию</a>
+        {% endif %}
+      <label for="file" class="form-label">Инструкция</label>
+      <input name="file" type="file" accept=".docx,.pdf,.xlsx,.xls" class="form-control" id="file">
+    </div>
+
+    <hr class="m-3"/>
+    <button type="submit" class="btn btn-warning btn-lg w-50">обновить</button>
+</form>
+
+{% endblock main %}

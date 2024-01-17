@@ -2,7 +2,6 @@
 {% load django_app_filters_and_tags %}
 
 {% block main %}
-
 <div class="container my-5">
     <form class="shadow p-3" method="POST" action="{% url 'search' %}" enctype="multipart/form-data">
         {% csrf_token %}
@@ -16,8 +15,19 @@
 
 <div class="container px-4 py-5" id="featured-3">
     <h2 class="border-bottom">Категории товаров:</h2>
-    <div class="row g-4 row-cols-1 row-cols-lg-4">
-        {% for c in categories %}
+
+    <div class="accordion" id="accordionExample">
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+        Категории
+      </button>
+    </h2>
+    <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+      <div class="accordion-body text-bg-lighy">
+{% include 'components/paginator.html' %}
+        <div class="row g-4 row-cols-1 row-cols-lg-4">
+        {% for c in page_obj %}
       <div class="feature col">
         <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2">
           <svg class="bi" width="1em" height="1em"><use xlink:href="#collection"></use></svg>
@@ -31,6 +41,13 @@
       </div>
         {% endfor %}
     </div>
+{% include 'components/paginator.html' %}
+      </div>
+    </div>
+  </div>
+</div>
+
+
   </div>
 
     <hr/>

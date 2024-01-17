@@ -83,6 +83,19 @@ class TagItem(models.Model):  # товар дня, распродажа, на д
 
 
 class Item(models.Model):
+    author = models.ForeignKey(
+        verbose_name="Автор",
+        db_index=True,
+        primary_key=False,
+        editable=True,
+        blank=True,
+        null=False,
+        default=None,
+        max_length=100,
+        #
+        to=User,
+        on_delete=models.CASCADE,
+    )
     title = models.CharField(
         verbose_name="Наименование",
         db_index=True,
@@ -170,7 +183,7 @@ class Item(models.Model):
 
     class Meta:
         app_label = "django_app"
-        ordering = ("is_active", "-title")
+        ordering = ("is_active", "title")
         verbose_name = "Товар"
         verbose_name_plural = "Товары"
 

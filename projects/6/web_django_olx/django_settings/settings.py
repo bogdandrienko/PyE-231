@@ -89,9 +89,45 @@ CHANNEL_LAYERS = {"default": {"BACKEND": "channels.layers.InMemoryChannelLayer"}
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "django_db",
+        "USER": "django_usr",
+        "PASSWORD": "Qwerty!1234$",
+        "HOST": "127.0.0.1",
+        "PORT": "5432",
+    },
+    # psycopg2 - win, psycopg2-binary - lin
+    # создать пользователя (postgres - DANGER)
+    # создать базу с правами на этого пользователя
+    #
+    # "default": {
+    #     "ENGINE": "django.db.backends.sqlite3",
+    #     "NAME": BASE_DIR / "db.sqlite3",
+    # }
+}
+
+
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+    },
+    "special": {
+        "BACKEND": "django.core.cache.backends.db.DatabaseCache",
+        "LOCATION": "cache_table",
+        "TIMEOUT": "120",
+        "OPTIONS": {
+            # "MAX_ENTIES": 200,
+        },
+    },
+    # 'extra': {
+    #     'BACKEND': 'django_redis.cache.RedisCache',
+    #     'LOCATION': env("REDIS_LOCATION")',
+    #     'TIMEOUT': '240',
+    #     'OPTIONS': {
+    #         # "MAX_ENTIES": 200,
+    #         "PASSWORD": "12345qwertY!"
+    #     }
+    # }
 }
 
 

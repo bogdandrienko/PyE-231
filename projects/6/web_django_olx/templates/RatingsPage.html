@@ -1,0 +1,28 @@
+{% extends 'components/base.html' %}
+
+{% block main %}
+
+<div>
+{% if sort == "desc" %}
+    <a href="{% url 'ratings' %}?sort=desc" class="btn btn-lg btn-success">популярные сверху</a>
+{% else %}
+    <a href="{% url 'ratings' %}?sort=desc" class="btn btn-lg btn-outline-success">популярные сверху</a>
+{% endif %}
+
+{% if sort == "asc" %}
+    <a href="{% url 'ratings' %}?sort=asc" class="btn btn-lg btn-warning">популярные снизу</a>
+{% else %}
+    <a href="{% url 'ratings' %}?sort=asc" class="btn btn-lg btn-outline-warning">популярные снизу</a>
+{% endif %}
+
+    <a href="{% url 'ratings' %}?sort=date_asc" class="btn btn-lg btn-outline-danger">сверху свежие</a>
+    <a href="{% url 'ratings' %}?sort=date_desc" class="btn btn-lg btn-outline-danger">сверху старые</a>
+</div>
+
+<ul>
+    {% for i in items %}
+        <li>{{ i.title }} ({{ i.total_rating }})</li>
+    {% endfor %}
+</ul>
+
+{% endblock main %}

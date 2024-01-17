@@ -12,7 +12,7 @@ class CustomCorsMiddleware:
         response["Access-Control-Allow-Origin"] = "*"
         response["Access-Control-Allow-Headers"] = "*"
 
-        print(request.META)
+        # print(request.META)
         # request.
 
         with open("logs.txt", "a", encoding="utf-8") as f:

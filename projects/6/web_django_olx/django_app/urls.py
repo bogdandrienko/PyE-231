@@ -6,14 +6,16 @@ urlpatterns = [
     #
     path("search/", views.search, name="search"),
     path("category/", views.category, name="category"),
-    path("category/<str:slug_name>/", views.items, name="items"),
+    path("category/<str:slug_name>/", views.f_items, name="items"),
     path("item/<str:item_id>/", views.item, name="item"),
     path("bug/<str:item_id>/", views.bug, name="bug"),
     path("comment/", views.comment, name="comment"),
     path("comment/<str:comment_id>/delete/<str:item_id>/", views.comment_delete, name="comment_delete"),
     path("public/item/", views.public, name="public"),
     path("item/hide/<str:item_id>/", views.item_hide, name="item_hide"),
+    path("update/item/<str:item_id>/", views.update_item, name="update_item"),
     path("item/<str:item_id>/rating/<str:is_like>/", views.rating, name="rating"),
+    path("ratings/", views.ratings, name="ratings"),
     #
     path("register/", views.register, name="register"),  # {% url 'register' %}
     path("login/", views.login_v, name="login"),

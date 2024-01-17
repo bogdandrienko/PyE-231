@@ -1,4 +1,5 @@
 import datetime
+import random
 import re
 
 from django.contrib.auth import login, authenticate, logout
@@ -8,15 +9,44 @@ from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from django_app import models
+from django_app import models, utils
 
 
 def home(request):
     # print(request.META)
+    categories = utils.get_cache(key="categories", query=lambda: models.CategoryItem.objects.all(), timeout=3)
 
-    categories = models.CategoryItem.objects.all()
-    vips = models.Vip.objects.all().filter(expired__gt=datetime.datetime.now()).order_by("priority", "-article")
-    return render(request, "HomePage.html", {"categories": categories, "vips": vips})
+    selected_page = request.GET.get(key="page", default=1)
+    page_objs = Paginator(object_list=categories, per_page=1)
+    page_obj = page_objs.page(number=selected_page)
+
+    vips = utils.get_cache(
+        key="vips",
+        query=lambda: models.Vip.objects.all().filter(expired__gt=datetime.datetime.now()).order_by("priority", "-article"),
+        timeout=1,
+    )
+    return render(request, "HomePage.html", {"page_obj": page_obj, "vips": vips})
+
+
+def ratings(request):
+    # FRONTEND(USER) -> VIEW
+
+    # _items = utils.get_cache(key="ratings", query=lambda: models.Item.objects.filter(is_active=True), timeout=3)
+    _items = models.Item.objects.filter(is_active=True)
+    sort = request.GET.get("sort", "desc")
+    match sort:
+        case "asc":
+            _items = sorted(_items, key=lambda x: (x.total_rating(), x.title), reverse=False)
+        case "desc":
+            _items = sorted(_items, key=lambda x: (x.total_rating(), x.title), reverse=True)
+        case "date_asc":
+            _items = sorted(_items, key=lambda x: (x.date, x.title), reverse=False)
+        case "date_desc":
+            _items = sorted(_items, key=lambda x: (x.date, x.title), reverse=True)
+        case _:
+            _items = sorted(_items, key=lambda x: x.title, reverse=False)
+
+    return render(request, "RatingsPage.html", {"items": _items, "sort": sort})
 
 
 def search(request):
@@ -27,8 +57,8 @@ def search(request):
 
 
 def item_list(request):
-    items = models.Item.objects.all().filter(is_active=True).order_by("-price", "-title")
-    return render(request, "ItemListPage.html", context={"items": items})
+    _items = models.Item.objects.all().filter(is_active=True).order_by("-price", "-title")
+    return render(request, "ItemListPage.html", context={"items": _items})
 
 
 def category(request):
@@ -36,10 +66,32 @@ def category(request):
     return render(request, "CategoryPage.html", {"categories": categories})
 
 
-def items(request, slug_name: str):
+def f_items(request, slug_name: str):
     cat = models.CategoryItem.objects.get(slug=slug_name)
     # items = отдельные сущности
     _items = models.Item.objects.all().filter(is_active=True, category=cat)
+
+    """
+/*
+cat = models.CategoryItem.objects.get(slug=slug_name)
+_items = models.Item.objects.all().filter(is_active=True, category=cat)
+*/
+
+/*
+SELECT * FROM public.django_app_item
+WHERE category_id in (
+	SELECT id from public.django_app_categoryitem
+	where slug = 'electro'	
+) AND is_active = 'true'
+*/
+
+/*
+SELECT t1.*, t2.title as category_name FROM public.django_app_item as t1
+inner join public.django_app_categoryitem as t2 
+	ON t1.category_id = t2.id
+WHERE t2.slug = 'electro' AND t1.is_active = 'true'
+*/
+    """
 
     return render(request, "ItemListPage.html", context={"items": _items})
 
@@ -148,6 +200,41 @@ def public(request):
         _item = models.Item.objects.create(
             title=title, description=description, price=price, category=_category, avatar=avatar, file=file, is_active=False
         )
+
+        return redirect(reverse("category"))
+
+
+def update_item(request, item_id: str):
+    if request.method == "GET":
+        _categories = models.CategoryItem.objects.all()
+        _item = models.Item.objects.get(id=int(item_id))
+        return render(request, "UpdatePage.html", context={"categories": _categories, "item": _item})
+    elif request.method == "POST":
+        title = str(request.POST["title"])
+        description = str(request.POST["description"])
+        price = int(request.POST["price"])
+        _category = models.CategoryItem.objects.get(slug=str(request.POST["category"]))
+
+        avatar = request.FILES.get("avatar", None)  # UploadInMemoryFile
+        clear_avatar = True if request.POST.get("clear_avatar", None) else False
+        file = request.FILES.get("file", None)
+
+        _item = models.Item.objects.get(id=int(item_id))
+        if _item.title != title:
+            _item.title = title
+        if _item.description != description:
+            _item.description = description
+        if _item.price != price:
+            _item.price = price
+        if _item.category != _category:
+            _item.category = _category
+        if clear_avatar:
+            _item.avatar = None
+        if avatar:
+            _item.avatar = avatar
+        if file:
+            _item.file = file
+        _item.save()
 
         return redirect(reverse("category"))
 
