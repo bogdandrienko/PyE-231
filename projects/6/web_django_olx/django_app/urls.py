@@ -25,6 +25,12 @@ urlpatterns = [
     # chat
     path("chat/", views.chat, name="chat"),
     path("chat/<slug:room_slug>/", views.room, name="room"),
+    #
+    # path("about/", views.about),
+    path("about/", views.AboutView.as_view()),
+    path("profile/", views.ProfileView.as_view(), name="profile"),
+    #
+    path("moderate/users/", views.moderate_users, name="moderate_users"),
 ]
 
 from django_app import views_a

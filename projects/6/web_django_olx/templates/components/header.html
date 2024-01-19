@@ -1,3 +1,5 @@
+{% load django_app_filters_and_tags %}
+
 <div class="container">
 <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
   <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
@@ -12,6 +14,13 @@
     <li class="nav-item"><a href="{% url 'public' %}" class="nav-link">Опубликовать объявление</a></li>
     <li class="nav-item"><a href="{% url 'chat' %}" class="nav-link">Чат</a></li>
     <li class="nav-item"><a href="{% url 'ratings' %}" class="nav-link">Рейтинг товаров</a></li>
+    <li class="nav-item"><a href="{% url 'profile' %}" class="nav-link">Профиль</a></li>
+
+    {% check_access "UsersModeratePage_view" as access %}
+    {% if access %}
+        <li class="nav-item"><a href="{% url 'moderate_users' %}" class="nav-link text-danger">Модерация пользователей</a></li>
+    {% endif %}
+
     <li class="nav-item"><a href="#" class="nav-link">Цены</a></li>
     <li class="nav-item"><a href="#" class="nav-link">Контакты</a></li>
   </ul>

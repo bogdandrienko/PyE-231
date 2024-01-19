@@ -1,0 +1,29 @@
+{% load django_app_filters_and_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<ul>
+    {% for u in users %}
+        <li>
+            {{ u.username }}
+
+            {% check_access "UsersModeratePage_ban" as access %}
+            {% if access %}
+                <a href="#">забанить</a>
+            {% endif %}
+
+            {% check_access "UsersModeratePage_delete" as access %}
+            {% if access %}
+                <a href="#">удалить</a>
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>
+
+</body>
+</html>

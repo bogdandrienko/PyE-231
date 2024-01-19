@@ -9,7 +9,59 @@ from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from django.views.generic import TemplateView, View, ListView, DetailView, DeleteView, CreateView
+
 from django_app import models, utils
+
+"""
+Классы - ООП.
+1. Расширяемость(наследуемость), т.е. можно писать меньше кода, если правильно выстроить иерархию наследования.
+Есть определённые блоки кода, которые очень часто повторяются - их можно вынести на более высокий уровень абстракции.
+2. Возможность доработки.
+!СЛОЖНЕЕ
+
+from django.views.generic GENERIC - уже готовые шаблоны для большинства ситуаций
+
+path("about/", TemplateView.as_view(template_name="about.html"))
+
+Миксины(mixins) - смесь нескольких классов     
+class TemplateView(TemplateResponseMixin, ContextMixin, View):
+
+class GetObject(View): - получает один объект
+class GetObject(View, LoginRequired): - получает один объект, но требует авторизацию
+class GetObject(View, LoginRequired, Pagination, Cache): - получает один объект, но требует авторизацию, включает пагинацию и кэш
+class GetObject(View, LoginRequired, IsAdmin): - получает один объект, но требует авторизацию и права админа
+
+Функции - Функциональное/процедурное.
+1. Гибкость
+минус - много кода
+"""
+
+
+class AboutView(TemplateView):
+    template_name = "about.html"
+
+
+def about(request):
+    return render(request, "about.html")
+
+
+class ProfileView(View):
+    template_name = "profile.html"
+
+    def get(self, request):
+        """Будет возвращать объект профиля пользователя"""
+        # profile = models.Profile.objects.get(user=request.user)
+        # profile = request.user.profile  # autojoin - вытащить запись по связи
+        return render(request, template_name=self.template_name)
+
+    def post(self, request):
+        """Будет обновлять профиль"""
+        avatar = request.FILES.get("avatar", None)  # UploadInMemoryFile
+        if avatar:
+            request.user.profile.avatar = avatar
+            request.user.profile.save()
+        return render(request, template_name=self.template_name)
 
 
 def home(request):
@@ -269,6 +321,8 @@ INSERT INTO User
 VALUES 
     (:username, :password)
         """
+        # profile = models.Profile.objects.create(user=usr)
+
         # вход в аккаунт
         login(request, usr)  # create cookie -> session id
         # logout(request)  # delete cookie -> session id
@@ -305,6 +359,43 @@ def test(request):
     """
 
     return render(request, "TestPage.html")
+
+
+def check_access_slug(slug: str, redirect_url: str = "home"):
+    """Параметризируемый декоратор - конструктор декоратора"""
+
+    def check_access(func):
+        def wrapper(*args, **kwargs):
+            user: User = args[0].user
+            if not user.is_authenticated:
+                return redirect(reverse(redirect_url))
+            profile: models.Profile = user.profile
+            is_access: bool = profile.check_access(slug)
+            if not is_access:
+                return redirect(reverse(redirect_url))
+            # TODO VIEW
+            res = func(*args, **kwargs)
+            return res
+
+        return wrapper
+
+    return check_access
+
+
+@check_access_slug(slug="UsersModeratePage_view")
+def moderate_users(request):
+    users = User.objects.all()
+    return render(request, "ModerateUsers.html", context={"users": users})
+
+
+@check_access_slug(slug="UsersModeratePage_ban")
+def moderate_ban_users(request):
+    return render(request, "ModerateUsers.html")
+
+
+@check_access_slug(slug="UsersModeratePage_delete")
+def moderate_delete_users(request):
+    return render(request, "ModerateUsers.html")
 
 
 def chat(request):

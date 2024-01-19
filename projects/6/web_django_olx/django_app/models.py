@@ -2,6 +2,173 @@ from django.contrib.auth.models import User
 from django.core.validators import FileExtensionValidator
 from django.db import models
 from django.utils import timezone
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
+"""
+Стратегии расширения модели пользователя:
+Причина - недостаточно полей(столбцов), например аватар.
+
+1. OOP - наследуемся от модели пользователя, перепределяем/добавляем свойства.
+class UserExtend(User):
+    avatar = models.ImageField()
+    sex = models.BooleanField()
+    def get_prefix(self):
+        return ""
+!TODO опасно, т.к. эта модель используется во всех сторонних библиотеках, есть риск всё сломать.
+
+2. Proxy - промежуточная модель.
+!TODO неудобно
+
+3. Связь OneToOne - создание ещё одной таблицы и поле в ней, к таблице User с типом OneToOne.
+Минус - ещё одна таблица.
+"""
+
+
+class Profile(models.Model):
+    user = models.OneToOneField(
+        verbose_name="Автор",
+        db_index=True,
+        primary_key=False,
+        editable=True,
+        blank=True,
+        null=True,
+        default=None,
+        max_length=300,
+        #
+        to=User,
+        on_delete=models.CASCADE,
+        related_name="profile",
+    )
+    #
+    patronymic = models.CharField(
+        verbose_name="Отчество",
+        db_index=False,
+        primary_key=False,
+        unique=False,
+        editable=True,
+        blank=True,
+        null=True,
+        default="",
+        max_length=300,
+    )
+    avatar = models.ImageField(
+        verbose_name="Аватарка",
+        validators=[FileExtensionValidator(["jpg", "png", "jpeg"])],
+        unique=False,
+        editable=True,
+        blank=True,
+        null=True,
+        default=None,
+        upload_to="profile/avatars",
+    )
+
+    class Meta:
+        app_label = "auth"
+        ordering = ("-user",)
+
+    def __str__(self):
+        return f"<Profile {self.user.username} ({self.id})/>"
+
+    def check_access(self, action_slug: str = ""):
+        """
+        Нам нужно проверить, имеет ли этот User доступ к этому Action.
+        Проверить, есть ли группы с таким пользователей и таким действием.
+        """
+        try:
+            user: User = self.user
+            action: Action = Action.objects.get(slug=action_slug)
+            intersections = GroupExtend.objects.filter(users=user, actions=action)
+            if len(intersections) > 0:
+                return True
+            return False
+        except Exception as error:
+            print("error check_access: ", error)
+            return False
+
+
+@receiver(post_save, sender=User)
+def profile_create(sender, instance: User, created: bool, **kwargs):
+    # взять или создать
+    profile = Profile.objects.get_or_create(user=instance)
+
+
+class Action(models.Model):
+    slug = models.SlugField(
+        verbose_name="Ссылка",
+        db_index=True,
+        primary_key=False,
+        unique=True,
+        editable=True,
+        blank=True,
+        null=False,
+        default="",
+        max_length=500,
+    )
+    description = models.TextField(
+        verbose_name="Описание",
+        db_index=False,
+        primary_key=False,
+        unique=False,
+        editable=True,
+        blank=True,
+        null=False,
+        default="",
+    )
+
+    class Meta:
+        app_label = "auth"
+        ordering = ("slug",)
+        verbose_name = "Действие"
+        verbose_name_plural = "Действия"
+
+    def __str__(self):
+        return f"<Action {self.slug}({self.id}) = {self.description[:50]} />"
+
+
+class GroupExtend(models.Model):
+    name = models.CharField(
+        verbose_name="Название группы",
+        db_index=True,
+        primary_key=False,
+        unique=True,
+        editable=True,
+        blank=True,
+        null=False,
+        default="",
+        max_length=300,
+    )
+    users = models.ManyToManyField(
+        verbose_name="Пользователи принадлежащие к группе",
+        db_index=True,
+        primary_key=False,
+        unique=False,
+        editable=True,
+        blank=True,
+        default="",
+        max_length=300,
+        to=User,
+    )
+    actions = models.ManyToManyField(
+        verbose_name="Возможности доступные этой группе",
+        db_index=True,
+        primary_key=False,
+        unique=False,
+        editable=True,
+        blank=True,
+        default="",
+        max_length=300,
+        to=Action,
+    )
+
+    class Meta:
+        app_label = "auth"
+        ordering = ("name",)
+        verbose_name = "Группа"
+        verbose_name_plural = "Группы"
+
+    def __str__(self):
+        return f"<Group {self.name}({self.id}) />"
 
 
 class CategoryItem(models.Model):

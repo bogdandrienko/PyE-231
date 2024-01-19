@@ -86,3 +86,13 @@ def t_bugs_count(context: dict, item_id: str) -> int:
     _item = models.Item.objects.get(id=int(item_id))
     _bugs = models.ItemBug.objects.filter(item=_item)
     return _bugs.count()
+
+
+@register.simple_tag(takes_context=True)
+def check_access(context: dict, action_slug: str = "") -> bool:
+    user: User = context["request"].user
+    if not user.is_authenticated:
+        return False
+    profile: models.Profile = user.profile
+    is_access: bool = profile.check_access(action_slug)
+    return is_access
