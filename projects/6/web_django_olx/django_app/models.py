@@ -77,6 +77,8 @@ class Profile(models.Model):
         """
         try:
             user: User = self.user
+            # "action_slug" | "action_slug,action_slug,action_slug"
+            # [x.strip() for x in action_slug.split(',')] ["action_slug"] ["action_slug", "action_slug", "action_slug"]
             action: Action = Action.objects.get(slug=action_slug)
             intersections = GroupExtend.objects.filter(users=user, actions=action)
             if len(intersections) > 0:
@@ -211,7 +213,7 @@ class CategoryItem(models.Model):
         # Паттерн - для адекватного разделения ответственности.
         # SOLID -
         _category = CategoryItem.objects.get(id=int(self.id))
-        _items = Item.objects.filter(is_active=True, category=_category)
+        _items = Item.objects.filter(is_active=True, is_moderate=True, category=_category)
         return _items.count()
 
 
@@ -343,14 +345,19 @@ class Item(models.Model):
     )
 
     is_active = models.BooleanField(
-        verbose_name="Активеность объявления",
+        verbose_name="Активность объявления",
         null=False,
         default=True,
+    )
+    is_moderate = models.BooleanField(
+        verbose_name="Проверено ли объявление модератором?",
+        null=False,
+        default=False,
     )
 
     class Meta:
         app_label = "django_app"
-        ordering = ("is_active", "title")
+        ordering = ("-is_moderate", "is_active", "title")
         verbose_name = "Товар"
         verbose_name_plural = "Товары"
 

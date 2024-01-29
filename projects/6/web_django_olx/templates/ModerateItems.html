@@ -1,0 +1,28 @@
+{% extends 'components/base.html' %}
+{% load static %}
+{% load django_app_filters_and_tags %}
+
+{% block main %}
+
+<ul>
+    {% for i in items %}
+        <li>
+            {{ i.title }}
+            {{ i.description }}
+
+            <div class="input-group">
+                {% check_access "ItemsModeratePage_success" as access %}
+                {% if access %}
+                    <a href="{% url 'moderate_item' i.id %}?new_status=success" class="btn btn-lg btn-success">Одобрить</a>
+                {% endif %}
+
+                {% check_access "ItemsModeratePage_delete" as access %}
+                {% if access %}
+                    <a href="{% url 'moderate_item' i.id %}?new_status=delete" class="btn btn-lg btn-danger">Удалить товар</a>
+                {% endif %}
+            </div>
+        </li>
+    {% endfor %}
+</ul>
+
+{% endblock main %}

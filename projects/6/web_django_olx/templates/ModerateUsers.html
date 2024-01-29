@@ -1,12 +1,9 @@
+{% extends 'components/base.html' %}
+{% load static %}
 {% load django_app_filters_and_tags %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% block main %}
+
 <ul>
     {% for u in users %}
         <li>
@@ -25,5 +22,4 @@
     {% endfor %}
 </ul>
 
-</body>
-</html>
+{% endblock main %}

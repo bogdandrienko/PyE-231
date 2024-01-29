@@ -21,6 +21,12 @@
         <li class="nav-item"><a href="{% url 'moderate_users' %}" class="nav-link text-danger">Модерация пользователей</a></li>
     {% endif %}
 
+
+    {% check_access "ItemsModeratePage_view" as access %}
+    {% if access %}
+        <li class="nav-item"><a href="{% url 'moderate_items' %}" class="nav-link text-danger">Предмодерация товаров</a></li>
+    {% endif %}
+
     <li class="nav-item"><a href="#" class="nav-link">Цены</a></li>
     <li class="nav-item"><a href="#" class="nav-link">Контакты</a></li>
   </ul>

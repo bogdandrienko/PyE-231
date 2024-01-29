@@ -4,6 +4,16 @@
 
 {% block main %}
 
+<div class="container my-5">
+    <form class="shadow p-3" method="POST" action="{% url 'search' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="w-75 input-group">
+            <input name="search" type="text" minlength="1" value="{{ search }}" class="form-control form-control-lg" placeholder="поиск..." required=""/>
+            <button class="btn btn-primary btn-lg w-25" type="submit">искать</button>
+        </div>
+    </form>
+</div>
+
 <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
   <h1 class="display-4 fw-normal text-body-emphasis">Список товаров:</h1>
 </div>

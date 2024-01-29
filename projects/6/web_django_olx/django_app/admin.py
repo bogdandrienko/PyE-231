@@ -15,10 +15,10 @@ class ItemAdmin(admin.ModelAdmin):
     Настройки отображения, фильтрации и поиска модели на панели администратора
     """
 
-    list_display = ("author", "title", "description", "price", "category", "avatar", "file", "is_active")
+    list_display = ("author", "title", "description", "price", "category", "avatar", "file", "is_active", "is_moderate")
     list_display_links = ("author", "title")
-    list_editable = ("is_active",)
-    list_filter = ("author", "title", "description", "price", "category", "tags", "avatar", "file", "is_active")
+    list_editable = ("is_active", "is_moderate")
+    list_filter = ("author", "title", "description", "price", "category", "tags", "avatar", "file", "is_active", "is_moderate")
     filter_horizontal = ("tags",)
     fieldsets = (
         (
@@ -34,15 +34,7 @@ class ItemAdmin(admin.ModelAdmin):
         ),
         (
             "Дополнительное",
-            {
-                "fields": (
-                    "category",
-                    "tags",
-                    "avatar",
-                    "file",
-                    "is_active",
-                )
-            },
+            {"fields": ("category", "tags", "avatar", "file", "is_active", "is_moderate")},
         ),
     )
     search_fields = ["title", "description"]

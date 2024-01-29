@@ -29,8 +29,10 @@ urlpatterns = [
     # path("about/", views.about),
     path("about/", views.AboutView.as_view()),
     path("profile/", views.ProfileView.as_view(), name="profile"),
-    #
+    # moderators
     path("moderate/users/", views.moderate_users, name="moderate_users"),
+    path("moderate/items/", views.moderate_items, name="moderate_items"),
+    path("moderate/item/<str:item_id>/", views.moderate_item, name="moderate_item"),
 ]
 
 from django_app import views_a

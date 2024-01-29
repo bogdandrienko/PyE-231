@@ -7,8 +7,10 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView, View, ListView, DetailView, DeleteView, CreateView
 
 from django_app import models, utils
@@ -69,7 +71,7 @@ def home(request):
     categories = utils.get_cache(key="categories", query=lambda: models.CategoryItem.objects.all(), timeout=3)
 
     selected_page = request.GET.get(key="page", default=1)
-    page_objs = Paginator(object_list=categories, per_page=1)
+    page_objs = Paginator(object_list=categories, per_page=3)
     page_obj = page_objs.page(number=selected_page)
 
     vips = utils.get_cache(
@@ -83,8 +85,8 @@ def home(request):
 def ratings(request):
     # FRONTEND(USER) -> VIEW
 
-    # _items = utils.get_cache(key="ratings", query=lambda: models.Item.objects.filter(is_active=True), timeout=3)
-    _items = models.Item.objects.filter(is_active=True)
+    # _items = utils.get_cache(key="ratings", query=lambda: models.Item.objects.filter(is_active=True, is_moderate=True), timeout=3)
+    _items = models.Item.objects.filter(is_active=True, is_moderate=True)
     sort = request.GET.get("sort", "desc")
     match sort:
         case "asc":
@@ -104,12 +106,12 @@ def ratings(request):
 def search(request):
     if request.method == "POST":
         _search = request.POST.get("search", "")
-        _items = models.Item.objects.all().filter(is_active=True, title__icontains=_search)
-        return render(request, "ItemListPage.html", context={"items": _items})
+        _items = models.Item.objects.filter(is_active=True, is_moderate=True, title__icontains=_search)
+        return render(request, "ItemListPage.html", context={"items": _items, "search": _search})
 
 
 def item_list(request):
-    _items = models.Item.objects.all().filter(is_active=True).order_by("-price", "-title")
+    _items = models.Item.objects.filter(is_active=True, is_moderate=True).order_by("-price", "-title")
     return render(request, "ItemListPage.html", context={"items": _items})
 
 
@@ -121,12 +123,12 @@ def category(request):
 def f_items(request, slug_name: str):
     cat = models.CategoryItem.objects.get(slug=slug_name)
     # items = отдельные сущности
-    _items = models.Item.objects.all().filter(is_active=True, category=cat)
+    _items = models.Item.objects.filter(is_active=True, is_moderate=True, category=cat)
 
     """
 /*
 cat = models.CategoryItem.objects.get(slug=slug_name)
-_items = models.Item.objects.all().filter(is_active=True, category=cat)
+_items = models.Item.objects.filter(is_active=True, is_moderate=True, category=cat)
 */
 
 /*
@@ -250,7 +252,7 @@ def public(request):
         file = request.FILES.get("file", None)
 
         _item = models.Item.objects.create(
-            title=title, description=description, price=price, category=_category, avatar=avatar, file=file, is_active=False
+            title=title, description=description, price=price, category=_category, avatar=avatar, file=file, is_active=True, is_moderate=False
         )
 
         return redirect(reverse("category"))
@@ -352,11 +354,16 @@ def logout_v(request):
     return redirect(reverse("login"))
 
 
+@csrf_exempt
 def test(request):
     """
     context_processors - контекстный процессор -
     функции, которые вызываются КАЖДЫЙ ВЫЗОВ render(...)
     """
+    if request.method == "POST":
+        print(request.POST)
+        data = [{"mes": f"{x}: {x**2}"} for x in range(1, 100)]
+        return JsonResponse(data={"res": data}, status=211)
 
     return render(request, "TestPage.html")
 
@@ -388,6 +395,12 @@ def moderate_users(request):
     return render(request, "ModerateUsers.html", context={"users": users})
 
 
+@check_access_slug(slug="ItemsModeratePage_view")
+def moderate_items(request):
+    _items = models.Item.objects.filter(is_active=True, is_moderate=False)
+    return render(request, "ModerateItems.html", context={"items": _items})
+
+
 @check_access_slug(slug="UsersModeratePage_ban")
 def moderate_ban_users(request):
     return render(request, "ModerateUsers.html")
@@ -408,3 +421,19 @@ def room(request, room_slug: str):
     _room = models.Room.objects.get(slug=room_slug)
     _messages = models.Message.objects.filter(room=_room)[:30][::-1]
     return render(request, "RoomPage.html", context={"room": _room, "messages": _messages})
+
+
+# /item/6/?new_status=delete
+@check_access_slug(slug="ItemsModeratePage_success")
+def moderate_item(request, item_id: str):
+    # /item/6/?new_status=delete
+    # /item/6/?new_status=success
+    _new_status = request.GET["new_status"]
+    _item = models.Item.objects.get(id=int(item_id))
+    if _new_status == "success":
+        _item.is_moderate = True
+        _item.save()
+    else:
+        _item.delete()
+
+    return redirect(reverse("moderate_items"))
