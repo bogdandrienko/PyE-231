@@ -1,0 +1,7 @@
+{
+  "SERIAL_ID": "97080135",
+  "PROTOCOL": "http",
+  "HOST": "127.0.0.1",
+  "PORT": 8001,
+  "delay_loop_update_ui_from_local_settings": 0.1
+}

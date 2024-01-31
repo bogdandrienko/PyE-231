@@ -1,0 +1,1 @@
+2024-01-31 20:24:07.474838 push_button_temp_plan_plus: type object 'Utils' has no attribute 'sync_settings_to_web'

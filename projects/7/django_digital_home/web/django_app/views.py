@@ -1,3 +1,4 @@
+import datetime
 import json
 import sqlite3
 from django.http import JsonResponse
@@ -6,6 +7,7 @@ from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from django_app import utils
 
+# TODO - DRF
 
 def home(request):
     _rows = utils.Sql.sql_execute(
@@ -111,3 +113,31 @@ def settings_change(request) -> dict:
     )
 
     return redirect(reverse("home"))
+
+
+@csrf_exempt
+@utils.auth_paramaterized_decorator(_token="Token=auth12345")
+def history(request) -> dict:
+    _data = json.loads(request.body.decode("utf-8"))
+    # TODO уникальный ключ для серийного номера холодильника serial_id
+    # for k, v in _data["params"].items():
+    #     utils.Sql.sql_execute(
+    #         _query="""
+    # INSERT OR REPLACE
+    # INTO params
+    #     (key, value)
+    # VALUES
+    #     (:key, :value)
+    # ;""",  # TODO WHERE serial_id = '_data["id"]'
+    #         _kwargs={"key": str(k), "value": str(v)},
+    #         _source="local_settings.db",
+    #     )
+    # print(_data)
+    _params = _data["params"]
+    _params["date_time_server"] = datetime.datetime.now()
+    _text = ""
+    for k, v in _params.items():
+        _text += f"{k}={v};"
+    with open("logs.txt", "a") as f:
+        f.write(f"""{_text}\n""")
+    return {"data": 'OK'}
