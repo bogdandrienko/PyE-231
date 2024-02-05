@@ -1,1 +1,110 @@
 2024-01-31 20:24:07.474838 push_button_temp_plan_plus: type object 'Utils' has no attribute 'sync_settings_to_web'
+2024-02-02 20:16:46.405497 sync_settings_to_web: HTTPConnectionPool(host='127.0.0.1', port=8001): Max retries exceeded with url: /api/params/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x00000238332C3ED0>: Failed to establish a new connection: [WinError 10061] Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение'))
+2024-02-02 20:16:57.013635 sync_settings_to_web: HTTPConnectionPool(host='127.0.0.1', port=8001): Max retries exceeded with url: /api/params/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x00000238334B6B50>: Failed to establish a new connection: [WinError 10061] Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение'))
+2024-02-02 20:16:57.109528 sync_settings_to_web: HTTPConnectionPool(host='127.0.0.1', port=8001): Max retries exceeded with url: /api/params/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x00000238334AED50>: Failed to establish a new connection: [WinError 10061] Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение'))
+2024-02-02 20:16:57.265242 sync_settings_to_web: HTTPConnectionPool(host='127.0.0.1', port=8001): Max retries exceeded with url: /api/params/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x00000238334B72D0>: Failed to establish a new connection: [WinError 10061] Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение'))
+2024-02-02 20:17:52.381478 sync_settings_to_web: HTTPConnectionPool(host='127.0.0.1', port=8001): Max retries exceeded with url: /api/params/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001CFCE01B910>: Failed to establish a new connection: [WinError 10061] Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение'))
+2024-02-02 20:18:14.282409 sync_settings_to_web: HTTPConnectionPool(host='127.0.0.1', port=8001): Max retries exceeded with url: /api/params/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000002C088EE2A50>: Failed to establish a new connection: [WinError 10061] Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение'))
+2024-02-02 20:18:29.268135 sync_settings_to_web: HTTPConnectionPool(host='127.0.0.1', port=8001): Max retries exceeded with url: /api/params/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000026ED7BA29D0>: Failed to establish a new connection: [WinError 10061] Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение'))
+2024-02-02 20:18:46.988658 sync_settings_to_web: HTTPConnectionPool(host='127.0.0.1', port=8001): Max retries exceeded with url: /api/params/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000002811DCC2C50>: Failed to establish a new connection: [WinError 10061] Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение'))
+2024-02-02 20:19:00.499651 sync_settings_to_web: HTTPConnectionPool(host='127.0.0.1', port=8001): Max retries exceeded with url: /api/params/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x00000153CA3B3D90>: Failed to establish a new connection: [WinError 10061] Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение'))
+2024-02-02 20:20:01.529967 sync_settings_to_web: HTTPConnectionPool(host='127.0.0.1', port=8001): Max retries exceeded with url: /api/params/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000019B38CD2510>: Failed to establish a new connection: [WinError 10061] Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение'))
+2024-02-02 20:35:06.128811 sync_settings_to_web: web 500
+2024-02-02 20:35:28.406509 sync_settings_to_web: web 500
+2024-02-02 21:21:11.663616 sync_settings_from_web: web 500
+2024-02-02 21:21:16.668227 sync_settings_from_web: web 500
+2024-02-02 21:21:21.675074 sync_settings_from_web: web 500
+2024-02-02 21:21:26.680638 sync_settings_from_web: web 500
+2024-02-02 21:21:32.915336 sync_settings_from_web: web 500
+2024-02-02 21:21:37.920105 sync_settings_from_web: web 500
+2024-02-02 21:21:42.926902 sync_settings_from_web: web 500
+2024-02-02 21:21:47.930827 sync_settings_from_web: web 500
+2024-02-02 21:21:52.936121 sync_settings_from_web: web 500
+2024-02-02 21:21:57.938781 sync_settings_from_web: web 500
+2024-02-02 21:22:02.947113 sync_settings_from_web: web 500
+2024-02-02 21:22:07.950340 sync_settings_from_web: web 500
+2024-02-02 21:22:12.954818 sync_settings_from_web: web 500
+2024-02-02 21:23:16.554388 sql_execute: near ";": syntax error
+2024-02-02 21:23:21.559026 sql_execute: near ";": syntax error
+2024-02-02 21:23:26.564927 sql_execute: near ";": syntax error
+2024-02-02 21:23:31.568652 sql_execute: near ";": syntax error
+2024-02-02 21:23:36.572144 sql_execute: near ";": syntax error
+2024-02-02 21:44:39.521538 loop_simple_send_message: web 500
+2024-02-02 21:44:40.527194 loop_simple_send_message: web 500
+2024-02-02 21:44:41.530616 loop_simple_send_message: web 500
+2024-02-02 21:44:42.534159 loop_simple_send_message: web 500
+2024-02-02 21:44:43.538177 loop_simple_send_message: web 500
+2024-02-02 21:44:44.542638 loop_simple_send_message: web 500
+2024-02-02 21:44:45.549146 loop_simple_send_message: web 500
+2024-02-02 21:44:46.552753 loop_simple_send_message: web 500
+2024-02-02 21:44:47.556906 loop_simple_send_message: web 500
+2024-02-02 21:44:48.561138 loop_simple_send_message: web 500
+2024-02-02 21:44:49.566593 loop_simple_send_message: web 500
+2024-02-02 21:44:50.572517 loop_simple_send_message: web 500
+2024-02-02 21:44:51.577080 loop_simple_send_message: web 500
+2024-02-02 21:44:52.582640 loop_simple_send_message: web 500
+2024-02-02 21:44:53.588118 loop_simple_send_message: web 500
+2024-02-02 21:44:54.593415 loop_simple_send_message: web 500
+2024-02-02 21:45:06.562922 loop_simple_send_message: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/messages/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F5A8986C50>: Failed to establish a new connection: [WinError 10061] Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение'))
+чение'))
+2024-02-02 21:45:09.599566 loop_simple_send_message: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/messages/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F5A8202590>: Failed to establish a new connection: [WinError 10061] Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение'))
+2024-02-02 21:45:12.633968 loop_simple_send_message: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/messages/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F5A8993650>: Failed to establish a new connection: [WinError 10061] Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение'))
+2024-02-02 21:45:13.602007 sync_settings_from_web: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/params/?serial_id=97080135 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F5A8985C50>: Failed to establish a new connection: [WinError 10061] Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение'))
+2024-02-02 21:45:15.707762 loop_simple_send_message: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/messages/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F5A8429E90>: Failed to establish a new connection: [WinError 10061] Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение'))
+2024-02-02 21:45:17.224260 loop_simple_send_message: web 500
+2024-02-02 21:45:18.227148 loop_simple_send_message: web 500
+2024-02-02 21:45:19.233111 loop_simple_send_message: web 500
+2024-02-02 21:45:20.236755 loop_simple_send_message: web 500
+2024-02-02 21:45:21.240850 loop_simple_send_message: web 500
+2024-02-02 21:45:22.245197 loop_simple_send_message: web 500
+2024-02-02 21:45:23.250507 loop_simple_send_message: web 500
+2024-02-02 21:45:24.258736 loop_simple_send_message: web 500
+2024-02-02 21:45:25.264618 loop_simple_send_message: web 500
+2024-02-02 21:45:26.268502 loop_simple_send_message: web 500
+2024-02-02 21:45:27.273579 loop_simple_send_message: web 500
+2024-02-02 21:45:28.279169 loop_simple_send_message: web 500
+2024-02-02 21:45:29.285618 loop_simple_send_message: web 500
+2024-02-02 21:45:30.290966 loop_simple_send_message: web 500
+2024-02-02 21:45:31.296150 loop_simple_send_message: web 500
+2024-02-02 21:45:32.300907 loop_simple_send_message: web 500
+2024-02-02 21:45:33.305755 loop_simple_send_message: web 500
+2024-02-02 21:45:34.312645 loop_simple_send_message: web 500
+2024-02-02 21:45:35.349921 loop_simple_send_message: web 500
+2024-02-02 21:45:36.355672 loop_simple_send_message: web 500
+2024-02-02 21:45:37.402088 loop_simple_send_message: web 500
+2024-02-02 21:45:38.435684 loop_simple_send_message: web 500
+2024-02-02 21:45:39.483317 loop_simple_send_message: web 500
+2024-02-02 21:45:40.489301 loop_simple_send_message: web 500
+2024-02-02 21:45:41.500969 loop_simple_send_message: web 500
+2024-02-02 21:45:42.505840 loop_simple_send_message: web 500
+2024-02-02 21:45:43.510512 loop_simple_send_message: web 500
+2024-02-02 21:45:44.517508 loop_simple_send_message: web 500
+2024-02-02 21:45:45.522789 loop_simple_send_message: web 500
+2024-02-02 21:45:46.528082 loop_simple_send_message: web 500
+2024-02-02 21:45:47.533121 loop_simple_send_message: web 500
+2024-02-02 21:45:48.538146 loop_simple_send_message: web 500
+2024-02-02 21:45:49.543578 loop_simple_send_message: web 500
+2024-02-02 21:45:50.549313 loop_simple_send_message: web 500
+2024-02-02 21:45:51.554436 loop_simple_send_message: web 500
+2024-02-02 21:45:52.559850 loop_simple_send_message: web 500
+2024-02-02 21:45:53.563661 loop_simple_send_message: web 500
+2024-02-02 21:50:52.842431 loop_simple_send_message: ('Connection aborted.', ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None))
+2024-02-02 21:50:55.882639 loop_simple_send_message: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/messages/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000019A00543D90>: Failed to establish a new connection: [WinError 10061] Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение'))
+2024-02-02 21:50:58.651115 sync_settings_from_web: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/params/?serial_id=97080135 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000019A005361D0>: Failed to establish a new connection: [WinError 10061] Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение'))
+2024-02-02 21:50:58.905347 loop_simple_send_message: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/messages/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000019A7F6A8390>: Failed to establish a new connection: [WinError 10061] Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение'))
+2024-02-02 21:51:01.944494 loop_simple_send_message: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/messages/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000019A00558A50>: Failed to establish a new connection: [WinError 10061] Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение'))
+2024-02-02 21:51:04.975115 loop_simple_send_message: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/messages/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000019A005432D0>: Failed to establish a new connection: [WinError 10061] Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение'))
+2024-02-02 21:51:05.687279 sync_settings_from_web: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/params/?serial_id=97080135 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000019A7FF6E910>: Failed to establish a new connection: [WinError 10061] Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение'))
+2024-02-02 21:52:05.394716 loop_simple_send_message: ('Connection aborted.', ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None))
+2024-02-02 21:52:08.104683 sync_settings_from_web: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/params/?serial_id=97080135 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000019A00543890>: Failed to establish a new connection: [WinError 10061] Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение'))
+2024-02-02 21:52:08.454376 loop_simple_send_message: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/messages/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000019A00571510>: Failed to establish a new connection: [WinError 10061] Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение'))
+2024-02-02 21:52:11.549616 loop_simple_send_message: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/messages/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000019A00535850>: Failed to establish a new connection: [WinError 10061] Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение'))
+2024-02-02 21:52:14.591032 loop_simple_send_message: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/messages/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000019A7FF7F150>: Failed to establish a new connection: [WinError 10061] Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение'))
+2024-02-02 21:52:15.148693 sync_settings_from_web: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/params/?serial_id=97080135 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000019A00534350>: Failed to establish a new connection: [WinError 10061] Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение'))
+2024-02-02 21:56:26.585196 loop_simple_send_message: ('Connection aborted.', ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None))
+2024-02-02 21:56:29.000938 sync_settings_from_web: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/params/?serial_id=97080135 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000019A0055BB10>: Failed to establish a new connection: [WinError 10061] Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение'))
+2024-02-02 21:56:29.619534 loop_simple_send_message: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/messages/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000019A7DAC9D90>: Failed to establish a new connection: [WinError 10061] Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение'))
+2024-02-02 21:58:44.567707 sync_settings_from_web: ('Connection aborted.', ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None))
+2024-02-02 21:58:44.568709 loop_simple_send_message: ('Connection aborted.', ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None))
+2024-02-02 22:02:20.775476 loop_simple_send_message: ('Connection aborted.', ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None))
+2024-02-02 22:04:52.530009 loop_simple_send_message: ('Connection aborted.', ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None))

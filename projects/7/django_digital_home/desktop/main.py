@@ -13,7 +13,7 @@ import requests
 class Utils:
     class Logging:
         @staticmethod
-        def log_to_txt(_error, _prefix: str, _print: bool = False):
+        def log_to_txt(_error, _prefix: str, _print: bool = True):
             _message = f"{datetime.datetime.now()} {_prefix}: {_error}\n"
             if _print:
                 print(_message)
@@ -180,24 +180,30 @@ class Ui(QWidget):
                 _kwargs={},
                 _source="local_settings.db",
             )
+            print("push_button_temp_plan_minus")
             threading.Thread(target=self.sync_settings_to_web, args=()).start()
         except Exception as error:
             Utils.Logging.log_to_txt(error, "push_button_temp_plan_minus")
 
     def sync_settings_to_web(self):
         try:
+            print("sync_settings_to_web")
+
             # Sheduler(планировщик)
             now = datetime.datetime.now()
-            if now.hour < 8 or now.hour > 20:  # !20 > now.hour < 8
+            if now.hour < 8 or now.hour > 23:  # !23 > now.hour < 8
+                print("skip")
                 return
 
             _params = Utils.Service.get_all_params()
 
+            print("requests.post")
             _response = requests.post(
-                url=f"{conf['PROTOCOL']}://{conf['HOST']}:{conf['PORT']}/api/settings/set/",
+                url=f"{conf['PROTOCOL']}://{conf['HOST']}:{conf['PORT']}/api/params/",
                 headers={"Authorization": "Token=auth1234"},
-                data=json.dumps({"id": conf["SERIAL_ID"], "params": _params}),
+                json={"serial_id": conf["SERIAL_ID"], "params": _params},
             )
+            print(_response.status_code)
             if _response.status_code not in (200, 201):
                 raise Exception(f"web {_response.status_code}")
         except Exception as error:
@@ -228,28 +234,29 @@ class Ui(QWidget):
             while self.__alive:
                 try:
                     _response = requests.get(
-                        f"{conf['PROTOCOL']}://{conf['HOST']}:{conf['PORT']}/api/settings/get/", headers={"Authorization": "Token=auth123"}
+                        f"{conf['PROTOCOL']}://{conf['HOST']}:{conf['PORT']}/api/params/?serial_id={conf['SERIAL_ID']}",
+                        headers={"Authorization": "Token=auth123"},
                     )
                     if _response.status_code not in (200, 201):
                         raise Exception(f"web {_response.status_code}")
-                    _data = _response.json().get("data", {})
+                    _params = _response.json().get("data", {}).get("params", {})
                     _text = ""
-                    for k, v in _data.items():
+                    for k, v in _params.items():
                         _text += f"('{k}', '{v}'), "
                     Utils.sql_execute(
                         _query=f"""
-                                INSERT OR REPLACE 
-                                INTO params
-                                    (key, value)
-                                VALUES
-                                    {_text[:-2]} 
-                                ;""",
+                        INSERT OR REPLACE 
+                        INTO params
+                            (key, value)
+                        VALUES
+                            {_text[:-2]} 
+                        ;""",
                         _kwargs={},
                         _source="local_settings.db",
                     )
                 except Exception as error:
                     Utils.Logging.log_to_txt(error, "sync_settings_from_web")
-                time.sleep(3.0)
+                time.sleep(5.0)
 
         def loop_emulate_temp_change():
             while self.__alive:
@@ -280,7 +287,7 @@ class Ui(QWidget):
                     Utils.Logging.log_to_txt(error, "loop_emulate_temp_change")
                 time.sleep(1.0)
 
-        def loop_simple_sync_events():
+        def loop_simple_send_message():
             # Simple Исторические данные
             """
             Simple:
@@ -291,24 +298,24 @@ class Ui(QWidget):
                 try:
                     #
                     _params = Utils.Service.get_all_params()
-                    _params["date_time_subsystem"] = str(datetime.datetime.now())
 
                     #
                     _response = requests.post(
-                        url=f"{conf['PROTOCOL']}://{conf['HOST']}:{conf['PORT']}/api/history/",
+                        url=f"{conf['PROTOCOL']}://{conf['HOST']}:{conf['PORT']}/api/messages/",
                         headers={"Authorization": "Token=auth12345"},
-                        data=json.dumps({"id": conf["SERIAL_ID"], "params": _params}),
+                        json={"serial_id": conf["SERIAL_ID"], "date_time_subsystem": str(datetime.datetime.now()), "params": _params},
                     )
                     if _response.status_code not in (200, 201):
                         raise Exception(f"web {_response.status_code}")
                 except Exception as error:
-                    Utils.Logging.log_to_txt(error, "loop_simple_sync_events")
+                    Utils.Logging.log_to_txt(error, "loop_simple_send_message")
                 time.sleep(1.0)
 
         threading.Thread(target=loop_update_ui_from_local_settings).start()
-        # threading.Thread(target=self.sync_settings_to_web).start()
+        threading.Thread(target=loop_sync_settings_from_web).start()
+        threading.Thread(target=loop_simple_send_message).start()
+
         threading.Thread(target=loop_emulate_temp_change).start()
-        # threading.Thread(target=loop_simple_sync_events).start()
 
 
 if __name__ == "__main__":
