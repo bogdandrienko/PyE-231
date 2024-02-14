@@ -1,0 +1,17 @@
+Цель: получить от пользователя 2 цифры(сумма, на сколько месяцев), 
+и вернуть их результат на экран.
+
+Обработка на backend.
+
+POST
+
+js
+
+
+API: массив endpoint (ссылки). REST-full.
+/api/user/12 - GET - данные по 12 пользователю
+/api/user?sort=name_asc - GET - данные по пользователям
+/api/user - POST - создаёт
+/api/user/12 - POST(PUT/PATCH) - обновление
+/api/user/12 - DELETE - удаление
+swagger - 
