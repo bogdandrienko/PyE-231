@@ -1,0 +1,15 @@
+backend - Роман
+
+frontend - Евгений
+
+
+Book - сущность
+{"title": "Война и мир", "description": "Описание", "file": <MemoryUploadedFile>}
+
+"Книжный магазин"
+* Вывод всех книг
+(/api/book/?page=12&category=классика&sort=name_asc - GET)
+(/api/book/1 - GET - (slug_id / id) - )
+
+* Панель модератора контента, для внесение новых книг. (multipart-formdata)
+(/api/book/ - POST - {"title": "Война и мир", "description": "Описание", "file": <MemoryUploadedFile>})
