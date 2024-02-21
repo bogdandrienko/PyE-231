@@ -1,8 +1,3 @@
-backend - Роман
-
-frontend - Евгений
-
-
 Book - сущность
 {"title": "Война и мир", "description": "Описание", "file": <MemoryUploadedFile>}
 
@@ -11,5 +6,34 @@ Book - сущность
 (/api/book/?page=12&category=классика&sort=name_asc - GET)
 (/api/book/1 - GET - (slug_id / id) - )
 
+
+
+Шаблон проекта, дизайн
+Иерархия DOM (base>navbar-main(sidebar-content)-footer<base)
+Виртуальная маршрутизация
+Backend
+Веб-запрос
+
+REDUX (frontend) - передача состояний между компонентами
+Конструкторы
+
+Токены и доступ
+Кэш
+Пагинация
+Сортировка
+Поиск
+Переход на конкретную книгу
+
+Детальная страница
+Категории
+Лайки
+Комментарии
+
+
+
+
+
+
 * Панель модератора контента, для внесение новых книг. (multipart-formdata)
 (/api/book/ - POST - {"title": "Война и мир", "description": "Описание", "file": <MemoryUploadedFile>})
+
