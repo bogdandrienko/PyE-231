@@ -12,3 +12,11 @@ Frontend:
 * React (+redux)
 * Golang (+gin)
 * Хостинг базы данных на другом сервере
+
++1 Django DRF + React - restfull - SPA - Book Store (serialize, orm and sql, redis, nginx, gunicorn, postgresql, ubuntu server)
+
+User(url) React -> hosting -> ubuntu server(ip) -> nginx(https) -> gunicorn -> 
+Django DRF -> orm and sql -> postgresql/redis -> serialize -> React
+
++4 Go - Gin
++5 

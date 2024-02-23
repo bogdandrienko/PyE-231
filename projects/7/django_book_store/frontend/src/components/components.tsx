@@ -8,16 +8,28 @@ export function SimpleCounter() {
     <div>
       <div>
         <h2>SimpleCounter: {counter}</h2>
-        <button onClick={()=> {setCounter(counter + 1)}}>increase</button>
-        <button onClick={()=> {setCounter(counter - 1)}}>decrease</button>
+        <button
+          onClick={() => {
+            setCounter(counter + 1);
+          }}
+        >
+          increase
+        </button>
+        <button
+          onClick={() => {
+            setCounter(counter - 1);
+          }}
+        >
+          decrease
+        </button>
       </div>
     </div>
   );
 }
 
 export function ReducerSimpleReduxCounter(
-  state = {data: 666},
-  action: { type: string; payload: any }
+  state = { data: 666 },
+  action: { type: string; payload: any },
 ) {
   switch (action.type) {
     case "increase":
@@ -32,11 +44,14 @@ export function ReducerSimpleReduxCounter(
 export function SimpleReduxCounter() {
   const dispatch = useDispatch();
   const simpleReduxCounter = useSelector(
-    (state: any) => state.simpleReduxCounter
+    (state: any) => state.simpleReduxCounter,
   );
   return (
     <div>
-      <h1>SimpleReduxCounter: {simpleReduxCounter.data ? simpleReduxCounter.data : "нет данных"}</h1>
+      <h1>
+        SimpleReduxCounter:{" "}
+        {simpleReduxCounter.data ? simpleReduxCounter.data : "нет данных"}
+      </h1>
       <button
         onClick={() => {
           dispatch({ type: "increase", payload: simpleReduxCounter.data });
@@ -55,9 +70,6 @@ export function SimpleReduxCounter() {
   );
 }
 
-
-
-
 export const loadWeb = "loadWeb";
 export const successWeb = "successWeb";
 export const failWeb = "failWeb";
@@ -65,14 +77,9 @@ export const errorWeb = "errorWeb";
 export const error2Web2 = "errorWeb";
 export const resetWeb = "resetWeb";
 
-
-
-
-
-
 export function ReducerSimpleReduxWeb(
   state = {},
-  action: { type: string; payload: any }
+  action: { type: string; payload: any },
 ) {
   switch (action.type) {
     case loadWeb:
@@ -92,9 +99,7 @@ export function ReducerSimpleReduxWeb(
 
 export function SimpleReduxWeb() {
   const dispatch = useDispatch();
-  const simpleReduxWebPage = useSelector(
-    (state: any) => state.simpleReduxWeb
-  );
+  const simpleReduxWebPage = useSelector((state: any) => state.simpleReduxWeb);
 
   async function getData() {
     try {
@@ -103,18 +108,18 @@ export function SimpleReduxWeb() {
 
       // загрузка
       const response = await axios.get(
-        "https://jsonplaceholder.typicode.com/todos"
+        "https://jsonplaceholder.typicode.com/todos",
       );
 
       if (response.status === 200 || response.status === 201) {
         // данные успешно получены
-          dispatch({ type: successWeb, payload: response.data });
-        } else {
+        dispatch({ type: successWeb, payload: response.data });
+      } else {
         // ошибка backend
-          dispatch({ type: errorWeb, payload: response.statusText });
-        }
+        dispatch({ type: errorWeb, payload: response.statusText });
+      }
     } catch (error: any) {
-        // ошибка frontend
+      // ошибка frontend
       dispatch({ type: failWeb, payload: error.toString() });
     }
   }
@@ -148,59 +153,64 @@ export function SimpleReduxWeb() {
   );
 }
 
-
-
-
-
-export function constructorConstant(prefix: string){
-    return {load: `load_${prefix}`, success: `success_${prefix}`, fail: `fail_${prefix}`,
-        error: `error_${prefix}`, reset: `reset_${prefix}`}
+export function constructorConstant(prefix: string) {
+  return {
+    load: `load_${prefix}`,
+    success: `success_${prefix}`,
+    fail: `fail_${prefix}`,
+    error: `error_${prefix}`,
+    reset: `reset_${prefix}`,
+  };
 }
 
 export function constructorReducer(constant: any) {
-  return function (
-  state = {},
-  action: { type: string; payload: any }
-){
+  return function (state = {}, action: { type: string; payload: any }) {
     switch (action.type) {
-        case constant.load:
-            return { load: true };
-        case constant.success:
-          return { load: false, data: action.payload };
-        case constant.fail:
-          return { load: false, fail: action.payload };
-        case constant.error:
-          return { load: false, error: action.payload };
-        case constant.reset:
-          return { load: false };
-        default:
+      case constant.load:
+        return { load: true };
+      case constant.success:
+        return { load: false, data: action.payload };
+      case constant.fail:
+        return { load: false, fail: action.payload };
+      case constant.error:
+        return { load: false, error: action.payload };
+      case constant.reset:
+        return { load: false };
+      default:
         return state;
-  }
-  }
+    }
+  };
 }
 
-export async function constructorWebAction(dispatch: any, constant: any, url: string, method: string="GET", timeout: number=5000, data: any={}){
-    try{
-        dispatch({ type: constant.load });
-        const config: any = {
-            "url": url,
-            "method": method,
-            "timeout": timeout,
-            "data": data,
-            // "headers": 3000,
-            // "auth": 3000,
-            // "headers": 3000,
-        }
-        const response = await axios(config)
-        setTimeout(()=> {
-            if (response.status === 200 || response.status === 201){
-                dispatch({ type: constant.success, payload: response.data });
-            } else {
-                dispatch({ type: constant.error, payload: response.statusText });
-            }
-        }, 1000)
-    } catch (error: any){
-        console.error(`constructorWebAction: ${url} ${method}`, error)
-        dispatch({ type: constant.fail, payload: "Свяжитесь с админстратором" });
+export async function constructorWebAction(
+  dispatch: any,
+  constant: any,
+  url: string,
+  method: string = "GET",
+  timeout: number = 5000,
+  data: any = {},
+) {
+  try {
+    dispatch({ type: constant.load });
+    const config: any = {
+      url: url,
+      method: method,
+      timeout: timeout,
+      data: data,
+      // "headers": 3000,
+      // "auth": 3000,
+      // "headers": 3000,
+    };
+    const response = await axios(config);
+    // setTimeout(()=> {
+    if (response.status === 200 || response.status === 201) {
+      dispatch({ type: constant.success, payload: response.data.success });
+    } else {
+      dispatch({ type: constant.error, payload: response.statusText });
     }
+    // }, 1000)
+  } catch (error: any) {
+    console.error(`constructorWebAction: ${url} ${method}`, error);
+    dispatch({ type: constant.fail, payload: "Свяжитесь с админстратором" });
+  }
 }

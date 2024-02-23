@@ -3,7 +3,7 @@ python -m venv venv
 call venv/scripts/activate
 pip install -r requirements.txt
 pip install django
-pip install freeze > requirements.txt
+pip freeze > requirements.txt
 
 
 

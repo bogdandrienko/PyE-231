@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home Page</title>
+</head>
+<body>
+
+<h1>ТЕМПЕРАТУРА</h1>
+<table>
+<thead>
+    <tr>
+        <th>Наименование</th>
+        <th>Факт</th>
+        <th>План</th>
+        <th>+</th>
+        <th>-</th>
+    </tr>
+</thead>
+<tbody>
+    <tr>
+        <td>Холодильная камера</td>
+        <td>???</td>
+        <td>{{ params.temp_plan_high }}</td>
+        <td><a href="{% url 'settings_change' %}?name=temp_plan_high&action=plus">+</a></td>
+        <td><a href="{% url 'settings_change' %}?name=temp_plan_high&action=minus">-</a></td>
+    </tr>
+    <tr>
+        <td>Морозильная камера</td>
+        <td>???</td>
+        <td>{{ params.temp_plan_down }}</td>
+        <td><a href="{% url 'settings_change' %}?name=temp_plan_down&action=plus">+</a></td>
+        <td><a href="{% url 'settings_change' %}?name=temp_plan_down&action=minus">-</a></td>
+    </tr>
+</tbody>
+</table>
+
+</body>
+</html>
