@@ -1,7 +1,20 @@
-import * as bases from "../components/bases";
+// external
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
+// internal
+import * as bases from "../components/bases";
+import * as utils from "../components/utils";
+import * as constants from "../components/constants";
+import * as components from "../components/components";
+import * as loaders from "../components/loaders";
 
 export default function Page() {
+  // TODO hook ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const userRegister = useSelector((state: any) => state.userRegister);
   const [form, setForm] = useState({
     username: "",
     password: "",
@@ -10,27 +23,74 @@ export default function Page() {
     age: 18,
   });
 
-  function sendForm() {
-    if (form.password === form.password2) {
-      // отправка формы
+  // TODO function ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  function sendForm(event: any) {
+    // остановка перезагрузки страницы
+    event.preventDefault();
+
+    if (form.password === form.password2 && !userRegister.load) {
+      components.constructorWebAction(
+        dispatch,
+        constants.userRegister,
+        `${constants.host}/api/user/register/`,
+        "POST",
+        { username: form.username, password: form.password },
+        // { ...form },
+      );
+    } else {
+      window.alert("Заполните пароль!");
     }
   }
 
+  // TODO useEffect //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
   useEffect(() => {
-    console.log("form: ", form);
-  }, [form]);
+    if (userRegister && userRegister.data) {
+      setTimeout(() => {
+        navigate("/login");
+        dispatch({ type: constants.userRegister.reset });
+      }, 2000);
+    }
+  }, [userRegister]);
+
+  useEffect(() => {
+    if (constants.isDebug) {
+      console.log("userRegister: ", userRegister);
+    }
+  }, [userRegister]);
 
   return (
     <bases.Base1>
-      <div className={"container text-center"}>
+      <div className={"container text-center my-5"}>
         <h1 className="h3 display-5 lead fw-normal mb-3">Создайте аккаунт:</h1>
-        <form className={""}>
+
+        <article>
+          // TODO можно собрать воедино для DRY
+          <loaders.Loader1 isView={userRegister.load} />
+          {userRegister.error && (
+            <div className="alert alert-danger" role="alert">
+              {userRegister.error}
+            </div>
+          )}
+          {userRegister.fail && (
+            <div className="alert alert-danger" role="alert">
+              {userRegister.fail}
+            </div>
+          )}
+          {userRegister.data && (
+            <div className="alert alert-success" role="alert">
+              Аккаунт успешно создан!
+            </div>
+          )}
+        </article>
+
+        <form className={""} onSubmit={sendForm}>
           <div className={"m-1 p-1 input-group"}>
             <label className={"fw-bold p-2"}>
               Введите почту для регистрации:
             </label>
             <input
-              type={"email"}
+              type={"email"} // регулярка HTML5
               placeholder={"admin@gmail.com"}
               className={"form-control w-50"}
               value={form.username}
@@ -47,15 +107,13 @@ export default function Page() {
               className={"form-control w-50"}
               value={form.password}
               onChange={(event) => {
-                setForm({ ...form, password: event.target.value });
+                setForm({
+                  ...form,
+                  password: utils.Regex.inputPassword2(event.target.value),
+                });
               }}
             ></input>
           </div>
-          {form.password !== form.password2 && (
-            <div className="alert alert-danger" role="alert">
-              пароли не совпадают!
-            </div>
-          )}
           <div className={"m-1 p-1 input-group"}>
             <label className={"fw-bold p-2"}>Повторите пароль:</label>
             <input
@@ -64,70 +122,29 @@ export default function Page() {
               className={"form-control w-50"}
               value={form.password2}
               onChange={(event) => {
-                setForm({ ...form, password2: event.target.value });
+                setForm({
+                  ...form,
+                  password2: utils.Regex.inputPassword2(event.target.value),
+                });
               }}
             ></input>
           </div>
+          {form.password !== form.password2 && (
+            <div className="alert alert-danger" role="alert">
+              пароли не совпадают!
+            </div>
+          )}
           <button
             className={
               form.password !== form.password2
-                ? "btn btn-warning disabled"
-                : "btn btn-warning"
+                ? "btn btn-outline-warning w-50 disabled"
+                : "btn btn-outline-warning w-50"
             }
+            type={"submit"}
           >
             создать аккаунт
           </button>
         </form>
-      </div>
-
-      <div className="bg-dark text-secondary px-4 py-5 text-center w-50">
-        <main className="form-signin w-100 m-auto">
-          <form>
-            <img
-              className="mb-4"
-              src="https://getbootstrap.com/docs/5.3/assets/brand/bootstrap-logo.svg"
-              alt=""
-              width="72"
-              height="57"
-            />
-            <h1 className="h3 mb-3 fw-normal">Please sign in</h1>
-
-            <div className="form-floating">
-              <input
-                type="email"
-                className="form-control"
-                id="floatingInput"
-                placeholder="name@example.com"
-              />
-              <label htmlFor="floatingInput">Email address</label>
-            </div>
-            <div className="form-floating">
-              <input
-                type="password"
-                className="form-control"
-                id="floatingPassword"
-                placeholder="Password"
-              />
-              <label htmlFor="floatingPassword">Password</label>
-            </div>
-
-            <div className="form-check text-start my-3">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                value="remember-me"
-                id="flexCheckDefault"
-              />
-              <label className="form-check-label" htmlFor="flexCheckDefault">
-                Remember me
-              </label>
-            </div>
-            <button className="btn btn-primary w-100 py-2" type="submit">
-              Sign in
-            </button>
-            <p className="mt-5 mb-3 text-body-secondary">© 2017–2023</p>
-          </form>
-        </main>
       </div>
     </bases.Base1>
   );

@@ -17,6 +17,15 @@ export const store = configureStore({
     bookUpdate: components.constructorReducer(constants.bookUpdate),
     // @ts-ignore
     bookDelete: components.constructorReducer(constants.bookDelete),
+    // user
+    // @ts-ignore
+    userRegister: components.constructorReducer(constants.userRegister),
+    // @ts-ignore
+    userLogin: components.constructorReducer(constants.userLogin),
+    // @ts-ignore
+    userDetail: components.constructorReducer(constants.userDetail),
+    // @ts-ignore
+    userUpdate: components.constructorReducer(constants.userUpdate),
   },
 });
 export default store;

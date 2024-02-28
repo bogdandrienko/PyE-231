@@ -1,7 +1,11 @@
 import time
 
+from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
 from django.db.models import QuerySet
+from django.http import HttpResponse, HttpRequest
+from django.shortcuts import render
+from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
 from rest_framework.request import Request
@@ -52,6 +56,10 @@ API - программный интерфейс(общение двух прог
 """
 
 
+def index(request: HttpRequest) -> HttpResponse:
+    return render(request, "build/index.html", {})
+
+
 @api_view(http_method_names=["GET"])
 @permission_classes([AllowAny])  # 1 ур - всем
 def api(request: Request) -> Response:
@@ -64,6 +72,22 @@ def api(request: Request) -> Response:
 def api_users(request: Request) -> Response:
     print(request.user)
     return Response(data={"message": User.objects.all()[0].password})
+
+
+@api_view(http_method_names=["POST"])
+@permission_classes([AllowAny])
+def api_user_register(request: Request) -> Response:
+    print("request.data: ", request.data)
+
+    username = request.data.get("username", None)
+    password = request.data.get("password", None)
+    if username and password:
+        # TODO НЕЛЬЗЯ ВЕРИТЬ FRONTEND! - нужна регулярка для валидации
+        User.objects.create(username=username, password=make_password(password))
+        # User.objects.create_user(username=username, password=password)
+        return Response(data={"success": "Account succesfully created!"}, status=status.HTTP_200_OK)
+    else:
+        return Response(data={"error": "Login or password is incorrect"}, status=status.HTTP_401_UNAUTHORIZED)
 
 
 @api_view(http_method_names=["GET", "POST"])

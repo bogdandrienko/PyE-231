@@ -18,7 +18,11 @@ REDUX (frontend) - передача состояний между компоне
 Конструкторы
 
 Токены и доступ
-Кэш
+Кэш (redis)
+PostgreSQL (database) - index
+[select * from books where time_published between now and now and title LIKE %%]
+explain
+
 Пагинация
 Сортировка
 Поиск
@@ -38,3 +42,6 @@ REDUX (frontend) - передача состояний между компоне
 * Панель модератора контента, для внесение новых книг. (multipart-formdata)
 (/api/book/ - POST - {"title": "Война и мир", "description": "Описание", "file": <MemoryUploadedFile>})
 
+* AuthGuard
+* рефреш
+* публикация книги

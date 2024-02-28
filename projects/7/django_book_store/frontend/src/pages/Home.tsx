@@ -1,54 +1,9 @@
+// external
 import * as bases from "../components/bases";
-import * as buttons from "../components/buttons";
-import * as inputs from "../components/inputs";
-import * as components from "../components/components";
-import {SimpleReduxCounter} from "../components/components";
-import {useSelector} from "react-redux";
-
 
 export default function Page() {
-    const simpleReduxCounter = useSelector(
-    (state: any) => state.simpleReduxCounter
-  );
-
-    function getName(name: string) {
-        console.log("Я ВЫЗВАН В РОДИТЕЛЕ NAME: ", name)
-    }
-
   return (
     <bases.Base1>
-
-      <hr/>
-        <div className={""}>
-
-      111111
-          <buttons.Button1 bodyClass={"btn btn-md btn-danger"}>
-            я текст на кнопке
-          </buttons.Button1>
-
-          <buttons.Button1 bodyClass={"btn btn-md btn-primary"}>
-            я текст на кнопке 2
-          </buttons.Button1>
-
-          <buttons.Button1 bodyClass={"btn btn-md btn-success"}>
-            я текст на кнопке 3
-          </buttons.Button1>
-
-            <inputs.Input1 callbackFunc={getName}/>
-            <inputs.Input1 callbackFunc={getName}/>
-            <inputs.Input1 callbackFunc={getName}/>
-
-            <components.SimpleCounter />
-            <components.SimpleCounter />
-            <components.SimpleCounter />
-
-            <components.SimpleReduxCounter />
-            <components.SimpleReduxCounter />
-
-        </div>
-      <hr/>
-
-
       <div className="bg-dark text-secondary px-4 py-5 text-center">
         <div className="py-5">
           <h1 className="display-5 fw-bold text-white">Dark color hero</h1>
@@ -75,8 +30,23 @@ export default function Page() {
             </div>
           </div>
         </div>
+        <img
+          src="https://getbootstrap.com/docs/5.3/examples/heroes/bootstrap-themes.png"
+          className="d-block mx-lg-auto img-fluid"
+          alt="Bootstrap Themes"
+          width="400"
+          height="300"
+          loading="lazy"
+        />
+        <img
+          src="/static/img/winter.jpg"
+          className="d-block mx-lg-auto img-fluid"
+          alt="Bootstrap Themes"
+          width="400"
+          height="300"
+          loading="lazy"
+        />
       </div>
-        {simpleReduxCounter.data ? simpleReduxCounter.data : "нет данных"}
     </bases.Base1>
   );
 }

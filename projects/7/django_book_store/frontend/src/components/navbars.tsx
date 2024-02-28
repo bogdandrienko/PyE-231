@@ -1,6 +1,25 @@
+// external
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import * as constants from "./constants";
+import * as utils from "./utils";
 
 export function Navbar1() {
+  const userLogin = useSelector((state: any) => state.userLogin);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (utils.LocalStorage.get("userLogin.data.access")) {
+      dispatch({
+        type: constants.userLogin.success,
+        payload: {
+          access: utils.LocalStorage.get("userLogin.data.access"),
+          refresh: utils.LocalStorage.get("userLogin.data.refresh"),
+        },
+      });
+    }
+  }, []);
+
   return (
     <header className="p-3 text-bg-dark">
       <div className="container">
@@ -16,14 +35,13 @@ export function Navbar1() {
                 Список книг
               </Link>
             </li>
-            !
-            <li>
-              <Link to="/book/public" className="nav-link px-2 text-white">
-                Предложить книгу (если человек украдёт ссылку, его нужно
-                перенаправлять AuthGuard)
-              </Link>
-            </li>
-            !
+            {userLogin && userLogin.data && (
+              <li>
+                <Link to="/book/public" className="nav-link px-2 text-danger">
+                  Предложить книгу
+                </Link>
+              </li>
+            )}
             <li>
               <a href="#" className="nav-link px-2 text-white">
                 Поиск
@@ -39,31 +57,33 @@ export function Navbar1() {
                 Рейтинги
               </a>
             </li>
+            <li>
+              <Link to="/notes" className="nav-link px-2 text-white">
+                Заметки
+              </Link>
+            </li>
           </ul>
 
-          <form
-            className="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3"
-            role="search"
-          >
-            <input
-              type="search"
-              className="form-control form-control-dark text-bg-dark"
-              placeholder="Search..."
-              aria-label="Search"
-            />
-          </form>
-
           <div className="text-end">
-            <div className="input-group">
-              <Link to="/login" className="btn btn-outline-success">
-                <i className="fa-solid fa-door-open p-2 m-0"></i>
-                Войти
-              </Link>
-              <Link to="/register" className="btn btn-outline-warning">
-                <i className="fa-solid fa-user-plus p-2 m-0"></i>
-                Зарегистрироваться
-              </Link>
-            </div>
+            {userLogin && userLogin.data ? (
+              <div className="input-group">
+                <Link to="/logout" className="btn btn-outline-danger">
+                  <i className="fa-solid fa-right-from-bracket p-2 m-0"></i>
+                  Выйти
+                </Link>
+              </div>
+            ) : (
+              <div className="input-group">
+                <Link to="/login" className="btn btn-outline-success">
+                  <i className="fa-solid fa-door-open p-2 m-0"></i>
+                  Войти
+                </Link>
+                <Link to="/register" className="btn btn-outline-warning">
+                  <i className="fa-solid fa-user-plus p-2 m-0"></i>
+                  Зарегистрироваться
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       </div>
