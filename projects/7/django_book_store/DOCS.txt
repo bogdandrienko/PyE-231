@@ -13,15 +13,17 @@ Book - сущность
 Виртуальная маршрутизация
 Backend
 Веб-запрос
-
 REDUX (frontend) - передача состояний между компонентами
 Конструкторы
-
 Токены и доступ
+
+* Собственная система токенов
+* AuthGuard
+* рефреш
+* публикация книги
+
 Кэш (redis)
-PostgreSQL (database) - index
-[select * from books where time_published between now and now and title LIKE %%]
-explain
+PostgreSQL (database) - index [select * from books where time_published between now and now and title LIKE %%] explain
 
 Пагинация
 Сортировка
@@ -42,6 +44,18 @@ explain
 * Панель модератора контента, для внесение новых книг. (multipart-formdata)
 (/api/book/ - POST - {"title": "Война и мир", "description": "Описание", "file": <MemoryUploadedFile>})
 
-* AuthGuard
-* рефреш
-* публикация книги
+
+
+Собственная система токенов, причины:
+* Гибче и понимаем как работает
+* Упростить
+* Пример тестового озадания: "реализуйте систему с сущностью Токен, она связана m2m к сущности User, который связан Group"
+* Свой стек технологий (Golang), RPS (60% /api/token/..., 10%, 30%)
+
+/api/token/
+/api/token/verify/
+/api/token/refresh/
+/api/token/block/
+
+RAW SQL vs ORM
+Token, UserExtra, GroupExtra
