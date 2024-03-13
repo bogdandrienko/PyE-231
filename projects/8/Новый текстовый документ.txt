@@ -7,6 +7,8 @@ Frontend:
 
 * Токены
 
+* Timeout blocking
+* sheduler(планировщик)
 
 * приватный чат(вебсокеты)
 * React (+redux)

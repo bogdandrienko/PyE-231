@@ -1,0 +1,17 @@
+https://go.dev/
+https://www.jetbrains.com/ru-ru/go/
+
+https://go.dev/doc/tutorial/web-service-gin
+
+go mod init example/web-service-gin
+
+go get .
+
+go run .
+
+go build
+
+https://github.com/bogdandrienko/gin_tsx_web_app/tree/main/web_platform_23_05_dev/backend
+
+  mili  micro   nano    piko
+0.000    000     510       000
