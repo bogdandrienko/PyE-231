@@ -1,19 +1,9 @@
 Backend:
-* Сериализация (DRF)
-* Сваггер
 
 Frontend:
-* Менеджер контекста
-
-* Токены
-
-* Timeout blocking
-* sheduler(планировщик)
-
 * приватный чат(вебсокеты)
-* React (+redux)
-* Golang (+gin)
 * Хостинг базы данных на другом сервере
+* Gitlab CI CD
 
 +1 Django DRF + React - restfull - SPA - Book Store (serialize, orm and sql, redis, nginx, gunicorn, postgresql, ubuntu server)
 
