@@ -1,0 +1,38 @@
+-- ТРУДОУСТРОЙСТВО:
+
+1. Резюме. -КЕМ-
+2. Портфолио.
+3. Отклик.
+
+НАШ СТЕК:
+язык:
+Python3
+
+фреймворки:
+Django / DRF
+
+БД:
+Django ORM (~SQLAlchemy)
+PostgreSQL (~MS SQL-server, Умеете составлять и оптимизировать запросы к реляционным СУБД)
+чистый SQL
+Redis
+
+вспомогательное:
+Rest API (~Rest / RESTFful), SOLID, ООП, KISS, DRY, TDD(test driver development)
+GIT
+Docker
+парсинге сайтов (~Selenium)
+телеграмм ботов
+Aiohttp
+тестирование (unit / perf / integr)
+swagger (+frontend)
+nginx, gunicorn
+Linux
+Понимание JS (приветствуется опыт работы с frontend фреймворками) для взаимодействия с front-end разработчиками
+
+**Celery (~RabbitMQ/Брокеры)** отложенные задачи - отправка письма, обработка нейронной модели [запуск, выполнение, ошибка, готово]
+
+ДОУЧИТЬ:
+SOAP
+MongoDB (база, хранит данные, спецично быстрее для конкретных операций)
+
