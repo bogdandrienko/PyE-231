@@ -1,0 +1,35 @@
+#######DONE#######:
+* Создание проекта
+* Regex url / url
+* Контроллер-классы и контроллер-функции
+* Django grappelli
+* Модели, миграции, расширенная регистрация
+* Контекстный процессор
+* Middleware
+* Утилиты
+* Обработка ошибок
+* Логирование
+* Декораторы
+* html inlude, extend
+* Фильтры, тэги, for, if, alias
+* форма
+* Переменные окружения
+* API (DRF)
+* ORM (CRUD+)
+* Миксины
+* Публикация проекта
+
+#######PROGRESS#######:
+---DRF Django rest framework---
+* собрать и вернуть react
+* собрать статику
+* Redis
+* Postgre
+* Celery
+* ORM (CRUD+ prefecth releted, bulk create)
+
+* Swagger
+* Тесты
+* Https(сертификат) проекта
+
+* Причесать код
