@@ -23,6 +23,12 @@ router.register(r"users", UserViewSet)
 
 urlpatterns = [
     path("api/", include(router.urls)),
+    path("react/", views.react, name="react"),
+    path("test_cache/", views.test_cache, name="test_cache"),
+    path("celer/", views.celer, name="celer"),
+    path("celer/res/<str:res>/", views.celer_res, name="celer_res"),
+    path("without_celery/", views.without_celery, name="without_celery"),
+    path("position/", views.position_create),
     path("", views.Home.as_view(), name=""),
     path("index/", views.Home.as_view(), name="index"),
     # path("home/", views.Home.as_view(), name="home"),
@@ -32,7 +38,7 @@ urlpatterns = [
     path("index_http/", views.index_http, name="index_http"),
     path("index_json/", views.index_json, name="index_json"),
     # TODO: DRF API
-    path("api/contacts/", views.get_contacts),
+    path("api/contacts/", views.get_contacts, name="get_contacts"),
     #
     # path("<str:question_id>/vote/", views.index_json, name="index_json"),
     # re_path(r"^(?P<question_id>\d+)/vote/$", views.index_json, name="index_json"),

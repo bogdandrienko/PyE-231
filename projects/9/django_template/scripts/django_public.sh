@@ -32,6 +32,57 @@ pwd
 # copy project to /root/web
 pip install -r requirements.txt
 
+########################################################################################################################
+REDIS
+########################################################################################################################
+sudo apt update -y
+sudo apt install -y redis
+redis-server
+redis-cli
+ping # PONG
+exit
+
+python -m celery -A django_settings worker -l info
+
+########################################################################################################################
+POSTGRES
+########################################################################################################################
+sudo apt install -y postgresql postgresql-contrib
+sudo passwd postgres
+sudo -i -u postgres
+psql postgres
+CREATE USER django_usr WITH PASSWORD 'Qwerty!1234$';
+CREATE DATABASE django_db OWNER django_usr;
+ALTER ROLE django_usr SET client_encoding TO 'utf8';
+ALTER ROLE django_usr SET timezone TO 'UTC';
+GRANT ALL PRIVILEGES ON DATABASE django_db TO django_usr;
+\q
+
+psql django_db
+\d
+\l
+
+\q
+exit
+
+sudo systemctl stop postgresql
+sudo systemctl status postgresql
+sudo systemctl restart postgresql
+sudo systemctl status postgresql
+
+sudo -i -u postgres
+psql django_db
+\c postgres
+\c django_db
+
+CREATE TABLE zarplata (id serial PRIMARY KEY, username VARCHAR ( 50 ) UNIQUE NOT NULL, salary INT);
+
+\d
+select * from zarplata;
+insert into zarplata (username, salary) VALUES ('Bogdan', '60000'), ('Alice', '80000');
+select * from zarplata;
+\q
+exit
 
 ########################################################################################################################
 GUNICORN
@@ -65,7 +116,7 @@ Group=www-data
 
 RuntimeDirectory=gunicorn
 WorkingDirectory=/home/ubuntu/web
-ExecStart=/home/ubuntu/web/venv/bin/gunicorn --workers 9 --bind unix:/run/gunicorn.sock django_settings.wsgi:application
+ExecStart=/home/ubuntu/web/venv/bin/gunicorn --workers 3 --bind unix:/run/gunicorn.sock django_settings.wsgi:application
 ExecReload=/bin/kill -s HUP $MAINPID
 KillMode=mixed
 TimeoutStopSec=5
@@ -76,11 +127,24 @@ WantedBy=multi-user.target
 </file>
 
 sudo systemctl daemon-reload
+sudo systemctl stop gunicorn
 sudo systemctl start gunicorn
+sudo systemctl disable --now gunicorn.service
 sudo systemctl enable --now gunicorn.service
 sudo systemctl daemon-reload
 sudo systemctl restart gunicorn
 sudo systemctl status gunicorn.service
+
+
+sudo -i
+sudo adduser ubuntu
+passwd ubuntu
+# Qwerty!1234
+sudo usermod -a -G sudo ubuntu
+su ubuntu
+# подключить ssh к ubuntu
+
+sudo usermod -aG ubuntu www-data
 
 ########################################################################################################################
 NGINX
@@ -98,7 +162,7 @@ server {
 listen 80;
 listen [::]:80;
 
-server_name 127.0.0.1 192.168.1.178 188.247.181.206 kgp.lol www.kgp.lol;
+server_name 194.67.82.59 kgp.lol www.kgp.lol;
 
 root /home/ubuntu/web;
 
@@ -114,7 +178,7 @@ sudo service nginx start
 sudo systemctl reload nginx.service
 sudo systemctl restart nginx
 sudo systemctl status nginx.service
-# http://192.168.1.178:80/
+# http://194.67.82.59:80/
 
 
 
@@ -150,7 +214,7 @@ resolver 1.1.1.1;
 
 client_max_body_size 100M;
 
-server_name 127.0.0.1 192.168.1.178 kgp.lol www.kgp.lol;
+server_name kgp.lol www.kgp.lol;
 
 root /home/ubuntu/web;
 

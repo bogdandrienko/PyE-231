@@ -14,3 +14,9 @@ class ContactAllSerializer(serializers.ModelSerializer):
             return str(obj.position.name)
         except Exception as error:
             return ""
+
+
+class PositionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Position
+        fields = "__all__"

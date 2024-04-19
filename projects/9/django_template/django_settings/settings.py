@@ -22,6 +22,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "drf_yasg",
     #
     "django_app",
     "rest_framework",
@@ -46,7 +47,7 @@ ROOT_URLCONF = "django_settings.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "templates"],
+        "DIRS": [BASE_DIR / "templates", BASE_DIR / "frontend"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -63,39 +64,57 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "django_settings.wsgi.application"
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    },
-    # 'special': {
-    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    #     'NAME': os.environ["PGDATABASE"],
-    #     'USER': os.environ["PGUSER"],
-    #     'PASSWORD': os.environ["PGPASSWORD"],
-    #     'HOST': os.environ["PGHOST"],
-    #     'PORT': os.environ["PGPORT"],
-    # }
-}
-
-CACHES = {
-    "default": {
-        "BACKEND": "django.core.cache.backends.db.DatabaseCache",
-        "LOCATION": "django_cache_table",
-        "TIMEOUT": "120",
-        "OPTIONS": {
-            "MAX_ENTIES": 200,
+if DEBUG:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
         },
-    },
-    "ram_cache": {
-        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
-        "LOCATION": "django_ram_cache_table",
-    },
-    # 'redis_cache': {
-    #     'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-    #     'LOCATION': 'django_ram_cache_table',
-    # },
-}
+    }
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": "django_db",
+            "USER": "django_usr",
+            "PASSWORD": "Qwerty!1234$",
+            "HOST": "127.0.0.1",
+            "PORT": "5432",
+        }
+    }
+
+
+if DEBUG:
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+            "LOCATION": "django_ram_cache_table",
+        },
+        "database_cache": {
+            "BACKEND": "django.core.cache.backends.db.DatabaseCache",
+            "LOCATION": "django_cache_table",
+            "TIMEOUT": "120",
+            "OPTIONS": {
+                "MAX_ENTIES": 200,
+            },
+        },
+    }
+else:
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.redis.RedisCache",
+            "LOCATION": "redis://127.0.0.1:6379",
+        },
+        "database_cache": {
+            "BACKEND": "django.core.cache.backends.db.DatabaseCache",
+            "LOCATION": "django_cache_table",
+            "TIMEOUT": "120",
+            "OPTIONS": {
+                "MAX_ENTIES": 200,
+            },
+        },
+    }
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -123,6 +142,7 @@ if not DEBUG:
     STATIC_ROOT = Path(BASE_DIR / "static")  # todo ENABLE FOR COLLECT STATIC
 STATICFILES_DIRS = [
     Path(BASE_DIR / "static_external"),
+    Path(BASE_DIR / "frontend/build/static"),
 ]
 
 if DEBUG:
@@ -131,3 +151,13 @@ if DEBUG:
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 REST_FRAMEWORK = {"DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.AllowAny"]}
+
+# todo CELERY
+CELERY_TIMEZONE = "Asia/Almaty"
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_TIME_LIMIT = 20 * 60
+CELERY_BROKER_URL = "redis://localhost:6379"
+# CELERY_BROKER_URL = "amqp://myuser:mypassword@localhost:5672/myvhost"
+CELERY_RESULT_BACKEND = "redis://localhost:6379"
+# 10 per/sec * 10 = 100 * 60 == 600 connection to db (timeout -> break)
+# todo CELERY
